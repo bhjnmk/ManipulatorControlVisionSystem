@@ -12,6 +12,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using Emgu.CV.CvEnum;
+using AForge.Video;
 
 namespace VisionSystem
 {
@@ -27,6 +28,8 @@ namespace VisionSystem
         int largest_contour_index = 0;
         double largest_area = 0;
 
+        MJPEGStream stream;
+        string camera = "";
         int x = 1;
         int y = 1;
         int number = 3;
@@ -38,25 +41,33 @@ namespace VisionSystem
 
         private void start_btn_Click(object sender, EventArgs e)
         {
-            if (cameraCapture == null)
+            
+            if (camera == "embeded")
             {
-                cameraCapture = new VideoCapture(0);
-                cameraCapture.QueryFrame();
+                if (cameraCapture == null)
+                {
+                    cameraCapture = new VideoCapture(0);
+                    cameraCapture.QueryFrame();
+                    Application.Idle += Capture_ImageGrabbed;
+                }
+            }
+            else if (camera == "ip")
+            {
 
-                Application.Idle += Capture_ImageGrabbed;
+                stream = new MJPEGStream("http://192.168.0.80:4747/video");
+                stream.NewFrame += stream_NewFrame;
+                stream.Start();
+
             }
         }
 
-        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        private void stream_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            if (cameraCapture == null)
-            {
-                cameraCapture = new VideoCapture(0);
-                cameraCapture.QueryFrame();
-                
-                Application.Idle += Capture_ImageGrabbed;
-            }
+            Bitmap bmp = (Bitmap)eventArgs.Frame.Clone();
+            pictureBox1.Image = bmp;
         }
+
+      
 
         private void Capture_ImageGrabbed(object sender, EventArgs e)
         {
@@ -179,14 +190,56 @@ namespace VisionSystem
 
         private void capture_btn_Click(object sender, EventArgs e)
         {
-            pictureBox3.Image = output.Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
-            
-            richTextBox2.Text = richTextBox2.Text + output.GetType();
+            if (camera == "embeded")
+            {
+                if (cameraCapture == null)
+                {
+                    cameraCapture = new VideoCapture(0);
+                    cameraCapture.QueryFrame();
+                    Application.Idle += Capture_ImageGrabbed;
+                }
+            }
+            else if (camera == "ip")
+            {
+
+                pictureBox3.Image = pictureBox1.Image;
+
+            }
+            //pictureBox3.Image = output.Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
+            //richTextBox2.Text = richTextBox2.Text + output.GetType();
         }
 
         private void richTextBox2_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            stopStream();
+        }
+
+        private void IPCamera_Click(object sender, EventArgs e)
+        {
+            camera = "ip";
+        }
+
+        private void EmbededCamera_Click(object sender, EventArgs e)
+        {
+            camera = "embeded";
+        }
+
+        private void stop_btn_Click(object sender, EventArgs e)
+        {
+            stopStream();
+        }
+        private void stopStream()
+        {
+            stream.Stop();
+            if (cameraCapture != null)
+            {
+                cameraCapture = null;
+            }
         }
     }
 }
