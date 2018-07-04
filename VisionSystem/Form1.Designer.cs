@@ -87,14 +87,14 @@
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.startToolStripMenuItem.Text = "IP Camera";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.IPCamera_Click);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.stopToolStripMenuItem.Text = "Embeded Camera";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.EmbededCamera_Click);
             // 
@@ -176,7 +176,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(236, 237);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(174, 111);
+            this.richTextBox1.Size = new System.Drawing.Size(175, 36);
             this.richTextBox1.TabIndex = 12;
             this.richTextBox1.Text = "";
             // 
@@ -192,9 +192,9 @@
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(634, 237);
+            this.richTextBox2.Location = new System.Drawing.Point(236, 279);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(174, 111);
+            this.richTextBox2.Size = new System.Drawing.Size(175, 36);
             this.richTextBox2.TabIndex = 13;
             this.richTextBox2.Text = "";
             this.richTextBox2.TextChanged += new System.EventHandler(this.richTextBox2_TextChanged);

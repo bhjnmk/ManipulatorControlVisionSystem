@@ -36,11 +36,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\AForge.NET\Framework\Release\AForge.Video.dll</HintPath>
     </Reference>
+    <Reference Include="Emgu.CV.DebuggerVisualizers.VS2017">
+      <HintPath>..\..\..\..\..\Emgu\emgucv-windesktop 3.4.1.2976\bin\Emgu.CV.DebuggerVisualizers.VS2017.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.CV.UI">
       <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windesktop 3.4.1.2976\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.World">
-      <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windesktop 3.4.1.2976\bin\Emgu.CV.World.dll</HintPath>
+    <Reference Include="Emgu.CV.World, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Emgu\emgucv-windesktop 3.4.1.2976\bin\Emgu.CV.World.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,6 +58,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Emgu\emgucv-windesktop 3.4.1.2976\bin\ZedGraph.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">

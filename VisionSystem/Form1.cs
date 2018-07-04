@@ -21,6 +21,7 @@ namespace VisionSystem
         VideoCapture cameraCapture;
         Image<Bgr, Byte> currentFrame;
         Image<Ycc, Byte> ycc = null;
+        Image<Ycc, Byte> ycc2 = null;
         Image<Ycc, Byte> findColor = null;
         Image<Gray, Byte> binary = null;
         Image<Gray, Byte> blurBinary = null;
@@ -33,7 +34,11 @@ namespace VisionSystem
         int x = 1;
         int y = 1;
         int number = 3;
-
+        string stop = "stop";
+        string run = "run";
+        int z = 0;
+        int z2 = 0;
+        int z3 = 0;
         public Form1()
         {
             InitializeComponent();
@@ -75,44 +80,74 @@ namespace VisionSystem
             {
                 currentFrame = cameraCapture.QueryFrame().ToImage<Bgr, Byte>().Resize(0.4, Emgu.CV.CvEnum.Inter.Cubic);
                 ycc = currentFrame.Convert<Ycc, Byte>();
-                findColor = FindColor(ycc);
-                binary = ChangeToBinary(findColor);
-                blurBinary = binary.SmoothMedian(5);
-                output = new Image<Gray, byte>(blurBinary.Width, blurBinary.Height, new Gray(0));
+                // findColor = FindColor(ycc);
+                //binary = ChangeToBinary(findColor);
+                //blurBinary = binary.SmoothMedian(5);
+                //output = new Image<Gray, byte>(blurBinary.Width, blurBinary.Height, new Gray(0));
+                pictureBox1.Image = ycc.ToBitmap();
+                Image<Gray, Byte> gray = ycc.Convert<Gray, Byte>(); //Convert it to Grayscale
+                pictureBox2.Image = gray.ToBitmap();
 
-                pictureBox1.Image = blurBinary.Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
+                CascadeClassifier fist = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/fist.xml");
+                CascadeClassifier palm = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/palm.xml");
+                
+                
+                 CascadeClassifier okey = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/cascade-okey2.xml");
 
-                VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
-                Mat hierarchy = new Mat();
-                CvInvoke.FindContours(
-                    blurBinary,
-                    contours,
-                    hierarchy,
-                    RetrType.External,
-                    ChainApproxMethod.ChainApproxSimple
-                    );
+                Rectangle[] rectangles;
+                Rectangle[] rectangles2;
+                //Rectangle[] rectangles3;
+                Rectangle[] rectangles4;
 
-                    for (int i = 0; i < contours.Size; i++)
+                // detect eyes.
+                rectangles = fist.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
+                rectangles2 = palm.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
+                //rectangles3 = okey.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
+                rectangles4 = okey.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
+
+
+                foreach (var rectangle in rectangles)
                     {
-                        double a = CvInvoke.ContourArea(contours[i], false);
-                    //if (a > largest_area)
-                    //{
-                    //    largest_area = a;
-                    //    largest_contour_index = i;
-                    //}
-                    CvInvoke.DrawContours(output, contours, i, new MCvScalar(255, 0, 0), 2);
+                    // draw detected locations.
+                    z = z + 1; //File.Create("C:/Emgu/test/my" + z + ".bmp");
+                    ycc.Draw(rectangle, new Ycc(122,222,12));
+                    richTextBox1.Text = String.Empty + "run";
+                    // ycc.Save("test.jpg");
+                    
+                  // ycc.Save("C:/Emgu/test/my" + z + ".bmp"); 
+
+    }
+                foreach (var rectangle2 in rectangles2)
+                {
+                    // draw detected locations.
+
+                    ycc.Draw(rectangle2, new Ycc(1, 2, 255));
+                    richTextBox1.Text = String.Empty + "stop";
+
+                    
+                }
+/*
+                foreach (var rectangle3 in rectangles3)
+                {
+                    // draw detected locations.
+
+                    ycc.Draw(rectangle3, new Ycc(185, 148, 185));
+                    richTextBox1.Text = String.Empty + "okey";
+
+
+                }*/
+                foreach (var rectangle4 in rectangles4)
+                {
+                    // draw detected locations.
+
+                    ycc.Draw(rectangle4, new Ycc(18, 12, 15));
+                    richTextBox1.Text = String.Empty + "ok";
+
+
                 }
 
-                    //CvInvoke.DrawContours(output, contours, largest_contour_index, new MCvScalar(255, 0, 0), 2);
 
-                    richTextBox1.Text = richTextBox1.Text + contours.Size + Environment.NewLine;
-                //pictureBox1.Image = currentFrame.Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
-                //pictureBox2.Image = findColor.Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
-                //pictureBox3.Image = binary.Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
-                pictureBox2.Image = output.Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
-
-
-                textBox1.Text = currentFrame.Bitmap.Size.Width.ToString();
+                pictureBox3.Image = ycc.ToBitmap();
                 
             }
             catch (Exception)
@@ -192,6 +227,10 @@ namespace VisionSystem
         {
             if (camera == "embeded")
             {
+                pictureBox5.Image = pictureBox1.Image;
+                z = z + 1;
+                ycc.Save("C:/Emgu/test/haar_classifier--okey" + z + ".jpg");
+
                 if (cameraCapture == null)
                 {
                     cameraCapture = new VideoCapture(0);
@@ -202,7 +241,7 @@ namespace VisionSystem
             else if (camera == "ip")
             {
 
-                pictureBox3.Image = pictureBox1.Image;
+                pictureBox5.Image = pictureBox1.Image;
 
             }
             //pictureBox3.Image = output.Flip(Emgu.CV.CvEnum.FlipType.Horizontal).Bitmap;
@@ -233,9 +272,10 @@ namespace VisionSystem
         {
             stopStream();
         }
+
         private void stopStream()
         {
-            stream.Stop();
+           // stream.Stop();
             if (cameraCapture != null)
             {
                 cameraCapture = null;
