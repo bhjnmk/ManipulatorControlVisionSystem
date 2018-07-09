@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.IO.Ports;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
@@ -40,6 +41,13 @@ namespace VisionSystem
         string stop = "stop";
         string run = "run";
         private PaintEventArgs ee;
+
+
+
+        static bool _continue;
+        static SerialPort _serialPort;
+
+
 
         public Form1()
         {
@@ -92,12 +100,12 @@ namespace VisionSystem
                 CascadeClassifier fist = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/fist.xml");
                 CascadeClassifier palm = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/palm.xml");
 
-               // CascadeClassifier rock = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/gesture-rock4.xml");
+                 CascadeClassifier rock = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/gesture-rockNEW.xml");
                 //CascadeClassifier okey = new CascadeClassifier("C:/OpenCV/opencv/build/x64/vc14/bin/test gesture/elephant_classifier.xml");
 
-                CascadeClassifier okey = new CascadeClassifier(" C:/Users/Zajkos/Desktop/gest rock/.xml");
-               
-               // CascadeClassifier victoria = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/gesture-victoria.xml");
+                //CascadeClassifier okey = new CascadeClassifier(" C:/Users/Zajkos/Desktop/gest rock/gesture-okNEW.xml.xml");
+
+                // CascadeClassifier victoria = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/gesture-victoria.xml");
 
                 Rectangle[] rectangles;
                 Rectangle[] rectangles2;
@@ -108,8 +116,8 @@ namespace VisionSystem
                 // detect eyes.
                 rectangles = fist.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
                 rectangles2 = palm.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
-               //rectangles3 = rock.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
-                rectangles4 = okey.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
+               rectangles3 = rock.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
+                //rectangles4 = okey.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
                 //rectangles5 = victoria.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
 
 
@@ -123,23 +131,51 @@ namespace VisionSystem
                 }
                 foreach (var rectangle2 in rectangles2)
                 {
-                    if (rectangle2.Height >= 80)
-                    {
+                    //if (rectangle2.Height >= 80)
+                    //{
                         ycc.Draw(rectangle2, new Ycc(1, 2, 255));
-                        // Create string to draw.
-                        String drawString = "sad";
-
-                        // Create font and brush.
-                        Font drawFont = new Font("Arial", 16);
-                        SolidBrush drawBrush = new SolidBrush(Color.Black);
-
-                        // Create point for upper-left corner of drawing.
-                        PointF drawPoint = new PointF(150.0F, 150.0F);
-
-                        // Draw string to screen.
-                        ee.Graphics.DrawString(drawString, drawFont, drawBrush, drawPoint);
+                       
                         richTextBox1.Text = String.Empty + "stop";
+                    //richTextBox2.Text = String.Empty + rectangle2;
+
+                    if (rectangle2.X >0 & rectangle2.X < 75 & rectangle2.Y >150 & rectangle2.Y <225)
+                    {
+                        richTextBox2.Text = String.Empty + "X minus";
+                        
+                    } else if (rectangle2.X > 425 & rectangle2.X < 500 & rectangle2.Y > 150 & rectangle2.Y < 225)
+                    {
+                        richTextBox2.Text = String.Empty + "X plus";
+
                     }
+                    else if (rectangle2.X > 225 & rectangle2.X < 300 & rectangle2.Y > 300 & rectangle2.Y < 375)
+                    {
+                        richTextBox2.Text = String.Empty + "y minus";
+
+                    }
+                    else if (rectangle2.X > 225 & rectangle2.X < 300 & rectangle2.Y > 0 & rectangle2.Y < 75)
+                    {
+                        richTextBox2.Text = String.Empty + "y plus";
+
+                    }
+                    else if (rectangle2.X > 425 & rectangle2.X < 500 & rectangle2.Y > 0 & rectangle2.Y < 75)
+                    {
+                        richTextBox2.Text = String.Empty + "z minus";
+
+                    }
+                    else if (rectangle2.X > 0 & rectangle2.X < 75 & rectangle2.Y > 300 & rectangle2.Y < 375)
+                    {
+                        richTextBox2.Text = String.Empty + "z plus";
+
+                    }
+                    else if (rectangle2.X > 225 & rectangle2.X < 300 & rectangle2.Y > 150 & rectangle2.Y < 225)
+                    {
+                        richTextBox2.Text = String.Empty + "menu";
+
+                    }
+               
+                    richTextBox2.Text = richTextBox2.Text + "\r\n" +"x:" + rectangle2.X + "y:"+ rectangle2.Y ;
+
+                    //}
                 }
 
                 //foreach (var rectangle3 in rectangles3)
@@ -155,15 +191,15 @@ namespace VisionSystem
                 //}
                 
 
-                foreach (var rectangle4 in rectangles4)
-                    {
-                    if (rectangle4.Height >= 100)
-                    {
-                        ycc.Draw(rectangle4, new Ycc(18, 12, 15));
-                        richTextBox1.Text = String.Empty + "ok";
-                               //richTextBox2.Text = richTextBox2.Text + rectangle4;
-                    }
-                }
+                //foreach (var rectangle4 in rectangles4)
+                //    {
+                //    if (rectangle4.Height >= 100)
+                //    {
+                //        ycc.Draw(rectangle4, new Ycc(18, 12, 15));
+                //        richTextBox1.Text = String.Empty + "ok";
+                //               //richTextBox2.Text = richTextBox2.Text + rectangle4;
+                //    }
+                //}
                 //foreach (var rectangle5 in rectangles5)
                 //{
                 //    // draw detected locations.
@@ -175,6 +211,7 @@ namespace VisionSystem
                 //}
 
                 pictureBox3.Image = ycc.ToBitmap();
+               
                 
             }
             catch (Exception)
@@ -203,21 +240,6 @@ namespace VisionSystem
             gray = gray.ThresholdBinary(new Gray(50), new Gray(255)).Not();
             return gray;
         }
-
-        //public IOutputArray FindContours(Image<Gray,Byte> binaryImage)
-        //{
-        //    VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
-        //    Mat hierarchy = new Mat();
-        //    CvInvoke.FindContours(
-        //        binaryImage,
-        //        contours,
-        //        hierarchy,
-        //        RetrType.Ccomp,
-        //        ChainApproxMethod.ChainApproxSimple
-        //        );
-        
-        //    return contours;
-        //}
         
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -260,23 +282,7 @@ namespace VisionSystem
             }
 
         }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            xLinear = Convert.ToInt32(linearSpeed.Value);
-        }
-
-        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
-        {
-            yLinear = Convert.ToInt32(linearSpeed.Value);
-        }
-
-        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
-        {
-            number = Convert.ToInt32(linearSpeed.Value);
-        }
-
-       
+     
 
         private void richTextBox2_TextChanged(object sender, EventArgs e)
         {
@@ -305,11 +311,236 @@ namespace VisionSystem
 
         private void stopStream()
         {
-           // stream.Stop();
             if (cameraCapture != null)
             {
                 cameraCapture = null;
             }
         }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            //open tab rozpoznawanie
+        }
+
+        private void rozpoznawaniePictureBox_Click(object sender, EventArgs e)
+        {
+            //add event after click open rozpoznawanie tab
+        }
+
+        private void parametryPictureBox_Click(object sender, EventArgs e)
+        {
+            //add event after click open parametry tab
+        }
+
+        private void ustawieniaPictureBox_Click(object sender, EventArgs e)
+        {
+            //add event after click open ustawenia tab
+        }
+
+        private void pomocPictureBox_Click(object sender, EventArgs e)
+        {
+            //add event after click open pomoc tab
+        }
+
+        private void servoOnBtn_Click(object sender, EventArgs e)
+        {
+            //R3 send servo off comand
+        }
+
+        private void servoOffBtn_Click(object sender, EventArgs e)
+        {
+            //R3 send servo off comand
+        }
+
+        private void jointMoveBtn_Click(object sender, EventArgs e)
+        {
+            //R3 send joint move comand
+        }
+
+        private void xyzMoveBtn_Click(object sender, EventArgs e)
+        {
+            //R3 send xyz move comand
+        }
+
+
+        // OGARNAC KOMUNIKACJE SERIAL PORT
+       /* public static void Main()
+        {
+            string name;
+            string message;
+            StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
+            Thread readThread = new Thread(Read);
+
+            // Create a new SerialPort object with default settings.
+            _serialPort = new SerialPort();
+
+            // Allow the user to set the appropriate properties.
+            _serialPort.PortName = SetPortName(_serialPort.PortName);
+            _serialPort.BaudRate = SetPortBaudRate(_serialPort.BaudRate);
+            _serialPort.Parity = SetPortParity(_serialPort.Parity);
+            _serialPort.DataBits = SetPortDataBits(_serialPort.DataBits);
+            _serialPort.StopBits = SetPortStopBits(_serialPort.StopBits);
+            _serialPort.Handshake = SetPortHandshake(_serialPort.Handshake);
+
+            // Set the read/write timeouts
+            _serialPort.ReadTimeout = 500;
+            _serialPort.WriteTimeout = 500;
+
+            _serialPort.Open();
+            _continue = true;
+            readThread.Start();
+
+            Console.Write("Name: ");
+            name = Console.ReadLine();
+
+            Console.WriteLine("Type QUIT to exit");
+
+            while (_continue)
+            {
+                message = Console.ReadLine();
+
+                if (stringComparer.Equals("quit", message))
+                {
+                    _continue = false;
+                }
+                else
+                {
+                    _serialPort.WriteLine(
+                        String.Format("<{0}>: {1}", name, message));
+                }
+            }
+
+            readThread.Join();
+            _serialPort.Close();
+        }
+
+        public static void Read()
+        {
+            while (_continue)
+            {
+                try
+                {
+                    string message = _serialPort.ReadLine();
+                    Console.WriteLine(message);
+                }
+                catch (TimeoutException) { }
+            }
+        }
+
+        // Display Port values and prompt user to enter a port.
+        public static string SetPortName(string defaultPortName)
+        {
+            string portName;
+
+            Console.WriteLine("Available Ports:");
+            foreach (string s in SerialPort.GetPortNames())
+            {
+                Console.WriteLine("   {0}", s);
+            }
+
+            Console.Write("Enter COM port value (Default: {0}): ", defaultPortName);
+            portName = Console.ReadLine();
+
+            if (portName == "" || !(portName.ToLower()).StartsWith("com"))
+            {
+                portName = defaultPortName;
+            }
+            return portName;
+        }
+        // Display BaudRate values and prompt user to enter a value.
+        public static int SetPortBaudRate(int defaultPortBaudRate)
+        {
+            string baudRate;
+
+            Console.Write("Baud Rate(default:{0}): ", defaultPortBaudRate);
+            baudRate = Console.ReadLine();
+
+            if (baudRate == "")
+            {
+                baudRate = defaultPortBaudRate.ToString();
+            }
+
+            return int.Parse(baudRate);
+        }
+
+        // Display PortParity values and prompt user to enter a value.
+        public static Parity SetPortParity(Parity defaultPortParity)
+        {
+            string parity;
+
+            Console.WriteLine("Available Parity options:");
+            foreach (string s in Enum.GetNames(typeof(Parity)))
+            {
+                Console.WriteLine("   {0}", s);
+            }
+
+            Console.Write("Enter Parity value (Default: {0}):", defaultPortParity.ToString(), true);
+            parity = Console.ReadLine();
+
+            if (parity == "")
+            {
+                parity = defaultPortParity.ToString();
+            }
+
+            return (Parity)Enum.Parse(typeof(Parity), parity, true);
+        }
+        // Display DataBits values and prompt user to enter a value.
+        public static int SetPortDataBits(int defaultPortDataBits)
+        {
+            string dataBits;
+
+            Console.Write("Enter DataBits value (Default: {0}): ", defaultPortDataBits);
+            dataBits = Console.ReadLine();
+
+            if (dataBits == "")
+            {
+                dataBits = defaultPortDataBits.ToString();
+            }
+
+            return int.Parse(dataBits.ToUpperInvariant());
+        }
+
+        // Display StopBits values and prompt user to enter a value.
+        public static StopBits SetPortStopBits(StopBits defaultPortStopBits)
+        {
+            string stopBits;
+
+            Console.WriteLine("Available StopBits options:");
+            foreach (string s in Enum.GetNames(typeof(StopBits)))
+            {
+                Console.WriteLine("   {0}", s);
+            }
+
+            Console.Write("Enter StopBits value (None is not supported and \n" +
+             "raises an ArgumentOutOfRangeException. \n (Default: {0}):", defaultPortStopBits.ToString());
+            stopBits = Console.ReadLine();
+
+            if (stopBits == "")
+            {
+                stopBits = defaultPortStopBits.ToString();
+            }
+
+            return (StopBits)Enum.Parse(typeof(StopBits), stopBits, true);
+        }
+        public static Handshake SetPortHandshake(Handshake defaultPortHandshake)
+        {
+            string handshake;
+
+            Console.WriteLine("Available Handshake options:");
+            foreach (string s in Enum.GetNames(typeof(Handshake)))
+            {
+                Console.WriteLine("   {0}", s);
+            }
+
+            Console.Write("Enter Handshake value (Default: {0}):", defaultPortHandshake.ToString());
+            handshake = Console.ReadLine();
+
+            if (handshake == "")
+            {
+                handshake = defaultPortHandshake.ToString();
+            }
+
+            return (Handshake)Enum.Parse(typeof(Handshake), handshake, true);
+        }*/
     }
 }
