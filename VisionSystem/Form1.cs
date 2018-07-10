@@ -1,38 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 using System.IO.Ports;
 using Emgu.CV;
 using Emgu.CV.Structure;
-using Emgu.CV.Util;
-using Emgu.CV.CvEnum;
 using AForge.Video;
-using System.Drawing.Drawing2D;
-using System.Collections;
-using System.ComponentModel;
 
 namespace VisionSystem
 {
-    public partial class Form1 : Form
+    public partial class AppWin : Form
     {
+        #region CameraVariables
         VideoCapture cameraCapture;
         Image<Bgr, Byte> currentFrame;
-        Image<Ycc, Byte> ycc = null;
-        Image<Ycc, Byte> ycc2 = null;
-        Image<Ycc, Byte> findColor = null;
-        Image<Gray, Byte> binary = null;
-        Image<Gray, Byte> blurBinary = null;
-        Image<Gray, byte> output;
-        int largest_contour_index = 0;
-        double largest_area = 0;
+        Image<Ycc, Byte> yccFrame = null;
 
+        //MJPEGStream stream;
         MJPEGStream stream;
         string camera = "";
         int xLinear = 1;
@@ -40,23 +23,101 @@ namespace VisionSystem
         int number = 3;
         string stop = "stop";
         string run = "run";
-        private PaintEventArgs ee;
+        #endregion
 
+        #region Classifier
+        CascadeClassifier fistClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/fist.xml");
+        CascadeClassifier palmClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/palm.xml");
+        CascadeClassifier rockClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/rock.xml");
 
+        Rectangle[] rectanglesFist;
+        Rectangle[] rectanglesPalm;
+        Rectangle[] rectanglesRock;
+        #endregion
 
         static bool _continue;
         static SerialPort _serialPort;
 
-
-
-        public Form1()
+        #region Contructor
+        public AppWin()
         {
             InitializeComponent();
+            Size = new Size(1080, 720);
+            StartPosition = FormStartPosition.CenterScreen;
+            picBoxCameraView.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+        #endregion
+
+        #region WindowSet
+        private void picBoxCameraView_Paint(object sender, PaintEventArgs e)
+        {
+            int box_width = Convert.ToInt32(picBoxCameraView.Width);
+            int box_height = Convert.ToInt32(picBoxCameraView.Height);
+            int rectangle_width = Convert.ToInt32(box_width / 3.5);
+            int rectangle_height = Convert.ToInt32(box_height / 3.5);
+
+            Rectangle yp = new Rectangle(box_width / 2 - rectangle_width / 2, 1, rectangle_width, rectangle_height);
+            Rectangle ym = new Rectangle(box_width / 2 - rectangle_width / 2, box_height - rectangle_height - 1, rectangle_width, rectangle_height);
+            Rectangle xm = new Rectangle(1, box_height / 2 - rectangle_height / 2, rectangle_width, rectangle_height);
+            Rectangle xp = new Rectangle(box_width - rectangle_width - 1, box_height / 2 - rectangle_height / 2, rectangle_width, rectangle_height);
+            Rectangle zp = new Rectangle(box_width - rectangle_width - 1, 1, rectangle_width, rectangle_height);
+            Rectangle zm = new Rectangle(1, box_height - rectangle_height - 1, rectangle_width, rectangle_height);
+            Rectangle menu = new Rectangle(box_width / 2 - rectangle_width / 2, box_height / 2 - rectangle_height / 2, rectangle_width, rectangle_height);
+
+            using (Pen pen = new Pen(Color.Blue, 1))
+            {
+                e.Graphics.DrawRectangle(pen, yp);
+                e.Graphics.DrawRectangle(pen, ym);
+            }
+            using (Pen pen = new Pen(Color.Red, 1))
+            {
+                e.Graphics.DrawRectangle(pen, xp);
+                e.Graphics.DrawRectangle(pen, xm);
+            }
+            using (Pen pen = new Pen(Color.Green, 1))
+            {
+                e.Graphics.DrawRectangle(pen, zp);
+                e.Graphics.DrawRectangle(pen, zm);
+            }
+            using (Pen pen = new Pen(Color.Black, 1))
+            {
+                e.Graphics.DrawRectangle(pen, menu);
+
+            }
+        }
+        #endregion
+
+        #region WindowEvents
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            stopStream();
+        }
+
+        private void IPCamera_Click(object sender, EventArgs e)
+        {
+            camera = "ip";
+        }
+
+        private void EmbededCamera_Click(object sender, EventArgs e)
+        {
+            camera = "embeded";
+        }
+
+        private void stop_btn_Click(object sender, EventArgs e)
+        {
+            stopStream();
+        }
+
+        private void stopStream()
+        {
+            if (cameraCapture != null)
+            {
+                cameraCapture = null;
+            }
         }
 
         private void start_btn_Click(object sender, EventArgs e)
         {
-            
             if (camera == "embeded")
             {
                 if (cameraCapture == null)
@@ -68,77 +129,48 @@ namespace VisionSystem
             }
             else if (camera == "ip")
             {
-
-                //stream = new MJPEGStream("http://192.168.0.80:4747/video");
-                //stream.NewFrame += stream_NewFrame;
-                //stream.Start();
-
+                stream = new MJPEGStream("http://192.168.0.80:4747/video");
+                stream.NewFrame += Stream_NewFrame;
+                stream.Start();
             }
         }
 
-        private void stream_NewFrame(object sender, NewFrameEventArgs eventArgs, PaintEventArgs ee)
+        private void Stream_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             Bitmap bmp = (Bitmap)eventArgs.Frame.Clone();
             pictureBox1.Image = bmp;
         }
 
-      
-
         private void Capture_ImageGrabbed(object sender, EventArgs e)
         {
             try
             {
-                currentFrame = cameraCapture.QueryFrame().ToImage<Bgr, Byte>().Resize(0.9, Emgu.CV.CvEnum.Inter.Cubic);
-                ycc = currentFrame.Convert<Ycc, Byte>();
-                // findColor = FindColor(ycc);
-                //binary = ChangeToBinary(findColor);
-                //blurBinary = binary.SmoothMedian(5);
-                //output = new Image<Gray, byte>(blurBinary.Width, blurBinary.Height, new Gray(0));
-                pictureBox1.Image = ycc.ToBitmap();
-                Image<Gray, Byte> gray = ycc.Convert<Gray, Byte>(); //Convert it to Grayscale
-                pictureBox2.Image = gray.ToBitmap();
-                CascadeClassifier fist = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/fist.xml");
-                CascadeClassifier palm = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/palm.xml");
+                currentFrame = cameraCapture.QueryFrame().ToImage<Bgr, Byte>();
+                yccFrame = currentFrame.Convert<Ycc, Byte>();
+                pictureBox1.Image = yccFrame.ToBitmap();
+                Image<Gray, Byte> grayFrame = yccFrame.Convert<Gray, Byte>();
+                pictureBox2.Image = grayFrame.ToBitmap();
 
-                 CascadeClassifier rock = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/gesture-rockNEW.xml");
-                //CascadeClassifier okey = new CascadeClassifier("C:/OpenCV/opencv/build/x64/vc14/bin/test gesture/elephant_classifier.xml");
+                rectanglesFist = fistClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
+                rectanglesPalm = palmClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
+                rectanglesRock = rockClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
 
-                //CascadeClassifier okey = new CascadeClassifier(" C:/Users/Zajkos/Desktop/gest rock/gesture-okNEW.xml.xml");
-
-                // CascadeClassifier victoria = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/gesture-victoria.xml");
-
-                Rectangle[] rectangles;
-                Rectangle[] rectangles2;
-                Rectangle[] rectangles3;
-                Rectangle[] rectangles4;
-                Rectangle[] rectangles5;
-
-                // detect eyes.
-                rectangles = fist.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
-                rectangles2 = palm.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
-               rectangles3 = rock.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
-                //rectangles4 = okey.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
-                //rectangles5 = victoria.DetectMultiScale(gray, scaleFactor: 1.2, minNeighbors: 12);
-
-
-                foreach (var rectangle in rectangles)
-                    {
-                    ycc.Draw(rectangle, new Ycc(122,222,12));
+                foreach (var rectangle in rectanglesFist)
+                {
+                    yccFrame.Draw(rectangle, new Ycc(122,222,12));
                     richTextBox1.Text = String.Empty + "run";
                     //richTextBox1.Text = richTextBox1.Text + xLinear.ToString();
-                    
-
                 }
-                foreach (var rectangle2 in rectangles2)
+
+                foreach (var rectangle2 in rectanglesPalm)
                 {
-                    //if (rectangle2.Height >= 80)
-                    //{
-                        ycc.Draw(rectangle2, new Ycc(1, 2, 255));
+                   
+                    yccFrame.Draw(rectangle2, new Ycc(1, 2, 255));
                        
-                        richTextBox1.Text = String.Empty + "stop";
+                    richTextBox1.Text = String.Empty + "stop";
                     //richTextBox2.Text = String.Empty + rectangle2;
 
-                    if (rectangle2.X >0 & rectangle2.X < 75 & rectangle2.Y >150 & rectangle2.Y <225)
+                    if (rectangle2.X > 0 & rectangle2.X < 75 & rectangle2.Y >150 & rectangle2.Y <225)
                     {
                         richTextBox2.Text = String.Empty + "X minus";
                         
@@ -180,16 +212,16 @@ namespace VisionSystem
 
                 //foreach (var rectangle3 in rectangles3)
                 //{
-                   
+
                 //    if (rectangle3.Height >= 80)
                 //    {
                 //        ycc.Draw(rectangle3, new Ycc(185, 148, 185));
                 //        richTextBox1.Text = String.Empty + "rock";
                 //        richTextBox2.Text = richTextBox2.Text + rectangle3;
                 //    }
-                      
+
                 //}
-                
+
 
                 //foreach (var rectangle4 in rectangles4)
                 //    {
@@ -209,113 +241,23 @@ namespace VisionSystem
 
 
                 //}
+                Bitmap bitmap = yccFrame.ToBitmap();
+                bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                picBoxCameraView.Image = bitmap;
 
-                pictureBox3.Image = ycc.ToBitmap();
-               
-                
             }
             catch (Exception)
             {
 
             }
         }
+        #endregion
 
-       
-
-        public Image<Ycc, Byte> FindColor(Image<Ycc, Byte> yccimage)
-        {
-            Image<Ycc, Byte> ret = yccimage;
-            var image = yccimage.InRange(new Ycc(30, 135, 85), new Ycc(235, 240, 240));
-            var mat = yccimage.Mat;
-            mat.SetTo(new MCvScalar(0), image);
-            mat.CopyTo(ret);
-
-            return ret;
-        }
-
-        public Image<Gray, Byte> ChangeToBinary(Image<Ycc, Byte> fcimage)
-        {
-            var mat = fcimage.Mat;
-            Image<Gray, Byte> gray = mat.ToImage<Gray, Byte>();
-            gray = gray.ThresholdBinary(new Gray(50), new Gray(255)).Not();
-            return gray;
-        }
-        
-        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (cameraCapture != null)
-            {
-                cameraCapture = null;
-            }
-        }
-
-       
-        private void pictureBox3_Paint(object sender, PaintEventArgs e)
-        {
-            Rectangle yp = new Rectangle(225, 1, Convert.ToInt32(pictureBox3.Width / 6), Convert.ToInt32(pictureBox3.Height / 6));
-            Rectangle ym = new Rectangle(225, 319, Convert.ToInt32(pictureBox3.Width / 6), Convert.ToInt32(pictureBox3.Height / 6));
-            Rectangle xp = new Rectangle(1, 150, Convert.ToInt32(pictureBox3.Width / 6), Convert.ToInt32(pictureBox3.Height / 6));
-            Rectangle xm = new Rectangle(460, 150, Convert.ToInt32(pictureBox3.Width / 6), Convert.ToInt32(pictureBox3.Height / 6));
-            Rectangle zp = new Rectangle(460, 1, Convert.ToInt32(pictureBox3.Width / 6), Convert.ToInt32(pictureBox3.Height / 6));
-            Rectangle zm = new Rectangle(1,319, Convert.ToInt32(pictureBox3.Width / 6), Convert.ToInt32(pictureBox3.Height / 6));
-
-            Rectangle menu = new Rectangle(225, 150, Convert.ToInt32(pictureBox3.Width / 6), Convert.ToInt32(pictureBox3.Height / 6));
-            using (Pen pen = new Pen(Color.Blue, 1))
-            {
-                e.Graphics.DrawRectangle(pen, yp);
-                e.Graphics.DrawRectangle(pen, ym);
-            }
-            using (Pen pen = new Pen(Color.Red, 1))
-            {
-                e.Graphics.DrawRectangle(pen, xp);
-                e.Graphics.DrawRectangle(pen, xm);
-            }
-            using (Pen pen = new Pen(Color.Green, 1))
-            {
-                e.Graphics.DrawRectangle(pen, zp);
-                e.Graphics.DrawRectangle(pen, zm);
-            }
-            using (Pen pen = new Pen(Color.Orange, 1))
-            {
-                e.Graphics.DrawRectangle(pen, menu);
-               
-            }
-
-        }
-     
-
-        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        public void whereIsHand()
         {
 
-        }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            stopStream();
-        }
-
-        private void IPCamera_Click(object sender, EventArgs e)
-        {
-            camera = "ip";
-        }
-
-        private void EmbededCamera_Click(object sender, EventArgs e)
-        {
-            camera = "embeded";
-        }
-
-        private void stop_btn_Click(object sender, EventArgs e)
-        {
-            stopStream();
-        }
-
-        private void stopStream()
-        {
-            if (cameraCapture != null)
-            {
-                cameraCapture = null;
-            }
-        }
+        }    
 
         private void pictureBox5_Click(object sender, EventArgs e)
         {

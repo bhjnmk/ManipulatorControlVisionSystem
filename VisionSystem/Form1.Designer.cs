@@ -1,6 +1,6 @@
 ﻿namespace VisionSystem
 {
-    partial class Form1
+    partial class AppWin
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWin));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,53 +37,53 @@
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.picBoxCameraView = new System.Windows.Forms.PictureBox();
             this.start_btn = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.menu = new System.Windows.Forms.TabControl();
             this.glowne = new System.Windows.Forms.TabPage();
-            this.parametry = new System.Windows.Forms.TabPage();
-            this.ustawienia = new System.Windows.Forms.TabPage();
+            this.pomocPictureBox = new System.Windows.Forms.PictureBox();
+            this.ustawieniaPictureBox = new System.Windows.Forms.PictureBox();
+            this.parametryPictureBox = new System.Windows.Forms.PictureBox();
+            this.rozpoznawaniePictureBox = new System.Windows.Forms.PictureBox();
             this.rozpoznawanie = new System.Windows.Forms.TabPage();
+            this.parametry = new System.Windows.Forms.TabPage();
+            this.xyzMoveBtn = new System.Windows.Forms.Button();
+            this.jointMoveBtn = new System.Windows.Forms.Button();
+            this.servoOffBtn = new System.Windows.Forms.Button();
+            this.servoOnBtn = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.label7 = new System.Windows.Forms.Label();
+            this.ustawienia = new System.Windows.Forms.TabPage();
+            this.stopSelect = new System.Windows.Forms.ComboBox();
+            this.dataSelect = new System.Windows.Forms.ComboBox();
+            this.baudSelect = new System.Windows.Forms.ComboBox();
+            this.paritySelect = new System.Windows.Forms.ComboBox();
+            this.comSelect = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.connect_btn = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pomoc = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.rozpoznawaniePictureBox = new System.Windows.Forms.PictureBox();
-            this.parametryPictureBox = new System.Windows.Forms.PictureBox();
-            this.ustawieniaPictureBox = new System.Windows.Forms.PictureBox();
-            this.pomocPictureBox = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.connect_btn = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comSelect = new System.Windows.Forms.ComboBox();
-            this.paritySelect = new System.Windows.Forms.ComboBox();
-            this.baudSelect = new System.Windows.Forms.ComboBox();
-            this.dataSelect = new System.Windows.Forms.ComboBox();
-            this.stopSelect = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.servoOnBtn = new System.Windows.Forms.Button();
-            this.servoOffBtn = new System.Windows.Forms.Button();
-            this.jointMoveBtn = new System.Windows.Forms.Button();
-            this.xyzMoveBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxCameraView)).BeginInit();
             this.menu.SuspendLayout();
             this.glowne.SuspendLayout();
-            this.parametry.SuspendLayout();
-            this.ustawienia.SuspendLayout();
-            this.rozpoznawanie.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.rozpoznawaniePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parametryPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ustawieniaPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pomocPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ustawieniaPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parametryPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rozpoznawaniePictureBox)).BeginInit();
+            this.rozpoznawanie.SuspendLayout();
+            this.parametry.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.ustawienia.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -116,14 +116,14 @@
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.startToolStripMenuItem.Text = "IP Camera";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.IPCamera_Click);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.stopToolStripMenuItem.Text = "Embeded Camera";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.EmbededCamera_Click);
             // 
@@ -142,14 +142,15 @@
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 3;
             // 
-            // pictureBox3
+            // picBoxCameraView
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(25, 48);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(600, 600);
-            this.pictureBox3.TabIndex = 4;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox3_Paint);
+            this.picBoxCameraView.BackColor = System.Drawing.SystemColors.Control;
+            this.picBoxCameraView.Location = new System.Drawing.Point(37, 38);
+            this.picBoxCameraView.Name = "picBoxCameraView";
+            this.picBoxCameraView.Size = new System.Drawing.Size(600, 600);
+            this.picBoxCameraView.TabIndex = 4;
+            this.picBoxCameraView.TabStop = false;
+            this.picBoxCameraView.Paint += new System.Windows.Forms.PaintEventHandler(this.picBoxCameraView_Paint);
             // 
             // start_btn
             // 
@@ -220,6 +221,61 @@
             this.glowne.Text = "Main Menu";
             this.glowne.UseVisualStyleBackColor = true;
             // 
+            // pomocPictureBox
+            // 
+            this.pomocPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("pomocPictureBox.Image")));
+            this.pomocPictureBox.Location = new System.Drawing.Point(275, 54);
+            this.pomocPictureBox.Name = "pomocPictureBox";
+            this.pomocPictureBox.Size = new System.Drawing.Size(75, 75);
+            this.pomocPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pomocPictureBox.TabIndex = 5;
+            this.pomocPictureBox.TabStop = false;
+            this.pomocPictureBox.Click += new System.EventHandler(this.pomocPictureBox_Click);
+            // 
+            // ustawieniaPictureBox
+            // 
+            this.ustawieniaPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("ustawieniaPictureBox.Image")));
+            this.ustawieniaPictureBox.Location = new System.Drawing.Point(189, 55);
+            this.ustawieniaPictureBox.Name = "ustawieniaPictureBox";
+            this.ustawieniaPictureBox.Size = new System.Drawing.Size(75, 75);
+            this.ustawieniaPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ustawieniaPictureBox.TabIndex = 2;
+            this.ustawieniaPictureBox.TabStop = false;
+            this.ustawieniaPictureBox.Click += new System.EventHandler(this.ustawieniaPictureBox_Click);
+            // 
+            // parametryPictureBox
+            // 
+            this.parametryPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("parametryPictureBox.Image")));
+            this.parametryPictureBox.Location = new System.Drawing.Point(102, 54);
+            this.parametryPictureBox.Name = "parametryPictureBox";
+            this.parametryPictureBox.Size = new System.Drawing.Size(75, 75);
+            this.parametryPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.parametryPictureBox.TabIndex = 1;
+            this.parametryPictureBox.TabStop = false;
+            this.parametryPictureBox.Click += new System.EventHandler(this.parametryPictureBox_Click);
+            // 
+            // rozpoznawaniePictureBox
+            // 
+            this.rozpoznawaniePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("rozpoznawaniePictureBox.Image")));
+            this.rozpoznawaniePictureBox.Location = new System.Drawing.Point(15, 54);
+            this.rozpoznawaniePictureBox.Name = "rozpoznawaniePictureBox";
+            this.rozpoznawaniePictureBox.Size = new System.Drawing.Size(75, 75);
+            this.rozpoznawaniePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rozpoznawaniePictureBox.TabIndex = 0;
+            this.rozpoznawaniePictureBox.TabStop = false;
+            this.rozpoznawaniePictureBox.Click += new System.EventHandler(this.rozpoznawaniePictureBox_Click);
+            // 
+            // rozpoznawanie
+            // 
+            this.rozpoznawanie.Controls.Add(this.start_btn);
+            this.rozpoznawanie.Controls.Add(this.button1);
+            this.rozpoznawanie.Location = new System.Drawing.Point(4, 22);
+            this.rozpoznawanie.Name = "rozpoznawanie";
+            this.rozpoznawanie.Size = new System.Drawing.Size(364, 348);
+            this.rozpoznawanie.TabIndex = 3;
+            this.rozpoznawanie.Text = "Rozpoznawanie";
+            this.rozpoznawanie.UseVisualStyleBackColor = true;
+            // 
             // parametry
             // 
             this.parametry.Controls.Add(this.xyzMoveBtn);
@@ -235,6 +291,66 @@
             this.parametry.TabIndex = 1;
             this.parametry.Text = "Paramtery";
             this.parametry.UseVisualStyleBackColor = true;
+            // 
+            // xyzMoveBtn
+            // 
+            this.xyzMoveBtn.Location = new System.Drawing.Point(222, 21);
+            this.xyzMoveBtn.Name = "xyzMoveBtn";
+            this.xyzMoveBtn.Size = new System.Drawing.Size(75, 23);
+            this.xyzMoveBtn.TabIndex = 4;
+            this.xyzMoveBtn.Text = "XYZ";
+            this.xyzMoveBtn.UseVisualStyleBackColor = true;
+            this.xyzMoveBtn.Click += new System.EventHandler(this.xyzMoveBtn_Click);
+            // 
+            // jointMoveBtn
+            // 
+            this.jointMoveBtn.Location = new System.Drawing.Point(63, 21);
+            this.jointMoveBtn.Name = "jointMoveBtn";
+            this.jointMoveBtn.Size = new System.Drawing.Size(75, 23);
+            this.jointMoveBtn.TabIndex = 4;
+            this.jointMoveBtn.Text = "JOINT";
+            this.jointMoveBtn.UseVisualStyleBackColor = true;
+            this.jointMoveBtn.Click += new System.EventHandler(this.jointMoveBtn_Click);
+            // 
+            // servoOffBtn
+            // 
+            this.servoOffBtn.Location = new System.Drawing.Point(222, 62);
+            this.servoOffBtn.Name = "servoOffBtn";
+            this.servoOffBtn.Size = new System.Drawing.Size(75, 23);
+            this.servoOffBtn.TabIndex = 3;
+            this.servoOffBtn.Text = "servo OFF";
+            this.servoOffBtn.UseVisualStyleBackColor = true;
+            this.servoOffBtn.Click += new System.EventHandler(this.servoOffBtn_Click);
+            // 
+            // servoOnBtn
+            // 
+            this.servoOnBtn.Location = new System.Drawing.Point(63, 62);
+            this.servoOnBtn.Name = "servoOnBtn";
+            this.servoOnBtn.Size = new System.Drawing.Size(75, 23);
+            this.servoOnBtn.TabIndex = 3;
+            this.servoOnBtn.Text = "servo ON";
+            this.servoOnBtn.UseVisualStyleBackColor = true;
+            this.servoOnBtn.Click += new System.EventHandler(this.servoOnBtn_Click);
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(107, 106);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(190, 45);
+            this.trackBar1.SmallChange = 10;
+            this.trackBar1.TabIndex = 2;
+            this.trackBar1.Value = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(49, 120);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(52, 13);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Prędkość";
             // 
             // ustawienia
             // 
@@ -257,128 +373,48 @@
             this.ustawienia.Text = "Ustawienia";
             this.ustawienia.UseVisualStyleBackColor = true;
             // 
-            // rozpoznawanie
+            // stopSelect
             // 
-            this.rozpoznawanie.Controls.Add(this.start_btn);
-            this.rozpoznawanie.Controls.Add(this.button1);
-            this.rozpoznawanie.Location = new System.Drawing.Point(4, 22);
-            this.rozpoznawanie.Name = "rozpoznawanie";
-            this.rozpoznawanie.Size = new System.Drawing.Size(364, 348);
-            this.rozpoznawanie.TabIndex = 3;
-            this.rozpoznawanie.Text = "Rozpoznawanie";
-            this.rozpoznawanie.UseVisualStyleBackColor = true;
+            this.stopSelect.FormattingEnabled = true;
+            this.stopSelect.Items.AddRange(new object[] {
+            "One",
+            "Two"});
+            this.stopSelect.Location = new System.Drawing.Point(129, 83);
+            this.stopSelect.Name = "stopSelect";
+            this.stopSelect.Size = new System.Drawing.Size(97, 21);
+            this.stopSelect.TabIndex = 14;
             // 
-            // pomoc
+            // dataSelect
             // 
-            this.pomoc.Location = new System.Drawing.Point(4, 22);
-            this.pomoc.Name = "pomoc";
-            this.pomoc.Size = new System.Drawing.Size(364, 348);
-            this.pomoc.TabIndex = 4;
-            this.pomoc.Text = "Pomoc";
-            this.pomoc.UseVisualStyleBackColor = true;
+            this.dataSelect.FormattingEnabled = true;
+            this.dataSelect.Items.AddRange(new object[] {
+            "2",
+            "4",
+            "8"});
+            this.dataSelect.Location = new System.Drawing.Point(15, 83);
+            this.dataSelect.Name = "dataSelect";
+            this.dataSelect.Size = new System.Drawing.Size(97, 21);
+            this.dataSelect.TabIndex = 13;
             // 
-            // contextMenuStrip1
+            // baudSelect
             // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.baudSelect.FormattingEnabled = true;
+            this.baudSelect.Items.AddRange(new object[] {
+            "9600"});
+            this.baudSelect.Location = new System.Drawing.Point(245, 33);
+            this.baudSelect.Name = "baudSelect";
+            this.baudSelect.Size = new System.Drawing.Size(97, 21);
+            this.baudSelect.TabIndex = 12;
             // 
-            // rozpoznawaniePictureBox
+            // paritySelect
             // 
-            this.rozpoznawaniePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("rozpoznawaniePictureBox.Image")));
-            this.rozpoznawaniePictureBox.Location = new System.Drawing.Point(15, 54);
-            this.rozpoznawaniePictureBox.Name = "rozpoznawaniePictureBox";
-            this.rozpoznawaniePictureBox.Size = new System.Drawing.Size(75, 75);
-            this.rozpoznawaniePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.rozpoznawaniePictureBox.TabIndex = 0;
-            this.rozpoznawaniePictureBox.TabStop = false;
-            this.rozpoznawaniePictureBox.Click += new System.EventHandler(this.rozpoznawaniePictureBox_Click);
-            // 
-            // parametryPictureBox
-            // 
-            this.parametryPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("parametryPictureBox.Image")));
-            this.parametryPictureBox.Location = new System.Drawing.Point(102, 54);
-            this.parametryPictureBox.Name = "parametryPictureBox";
-            this.parametryPictureBox.Size = new System.Drawing.Size(75, 75);
-            this.parametryPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.parametryPictureBox.TabIndex = 1;
-            this.parametryPictureBox.TabStop = false;
-            this.parametryPictureBox.Click += new System.EventHandler(this.parametryPictureBox_Click);
-            // 
-            // ustawieniaPictureBox
-            // 
-            this.ustawieniaPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("ustawieniaPictureBox.Image")));
-            this.ustawieniaPictureBox.Location = new System.Drawing.Point(189, 55);
-            this.ustawieniaPictureBox.Name = "ustawieniaPictureBox";
-            this.ustawieniaPictureBox.Size = new System.Drawing.Size(75, 75);
-            this.ustawieniaPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ustawieniaPictureBox.TabIndex = 2;
-            this.ustawieniaPictureBox.TabStop = false;
-            this.ustawieniaPictureBox.Click += new System.EventHandler(this.ustawieniaPictureBox_Click);
-            // 
-            // pomocPictureBox
-            // 
-            this.pomocPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("pomocPictureBox.Image")));
-            this.pomocPictureBox.Location = new System.Drawing.Point(275, 54);
-            this.pomocPictureBox.Name = "pomocPictureBox";
-            this.pomocPictureBox.Size = new System.Drawing.Size(75, 75);
-            this.pomocPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pomocPictureBox.TabIndex = 5;
-            this.pomocPictureBox.TabStop = false;
-            this.pomocPictureBox.Click += new System.EventHandler(this.pomocPictureBox_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(28, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Com";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(130, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Parity";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(245, 12);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Baud Rate";
-            // 
-            // connect_btn
-            // 
-            this.connect_btn.Location = new System.Drawing.Point(94, 189);
-            this.connect_btn.Name = "connect_btn";
-            this.connect_btn.Size = new System.Drawing.Size(150, 23);
-            this.connect_btn.TabIndex = 7;
-            this.connect_btn.Text = "Connect";
-            this.connect_btn.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 67);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(49, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Data bits";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(130, 67);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Stop bits";
+            this.paritySelect.FormattingEnabled = true;
+            this.paritySelect.Items.AddRange(new object[] {
+            "Even"});
+            this.paritySelect.Location = new System.Drawing.Point(129, 33);
+            this.paritySelect.Name = "paritySelect";
+            this.paritySelect.Size = new System.Drawing.Size(97, 21);
+            this.paritySelect.TabIndex = 11;
             // 
             // comSelect
             // 
@@ -394,110 +430,75 @@
             this.comSelect.Size = new System.Drawing.Size(97, 21);
             this.comSelect.TabIndex = 10;
             // 
-            // paritySelect
+            // label6
             // 
-            this.paritySelect.FormattingEnabled = true;
-            this.paritySelect.Items.AddRange(new object[] {
-            "Even"});
-            this.paritySelect.Location = new System.Drawing.Point(129, 33);
-            this.paritySelect.Name = "paritySelect";
-            this.paritySelect.Size = new System.Drawing.Size(97, 21);
-            this.paritySelect.TabIndex = 11;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(130, 67);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Stop bits";
             // 
-            // baudSelect
+            // label5
             // 
-            this.baudSelect.FormattingEnabled = true;
-            this.baudSelect.Items.AddRange(new object[] {
-            "9600"});
-            this.baudSelect.Location = new System.Drawing.Point(245, 33);
-            this.baudSelect.Name = "baudSelect";
-            this.baudSelect.Size = new System.Drawing.Size(97, 21);
-            this.baudSelect.TabIndex = 12;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 67);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(49, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Data bits";
             // 
-            // dataSelect
+            // connect_btn
             // 
-            this.dataSelect.FormattingEnabled = true;
-            this.dataSelect.Items.AddRange(new object[] {
-            "2",
-            "4",
-            "8"});
-            this.dataSelect.Location = new System.Drawing.Point(15, 83);
-            this.dataSelect.Name = "dataSelect";
-            this.dataSelect.Size = new System.Drawing.Size(97, 21);
-            this.dataSelect.TabIndex = 13;
+            this.connect_btn.Location = new System.Drawing.Point(94, 189);
+            this.connect_btn.Name = "connect_btn";
+            this.connect_btn.Size = new System.Drawing.Size(150, 23);
+            this.connect_btn.TabIndex = 7;
+            this.connect_btn.Text = "Connect";
+            this.connect_btn.UseVisualStyleBackColor = true;
             // 
-            // stopSelect
+            // label4
             // 
-            this.stopSelect.FormattingEnabled = true;
-            this.stopSelect.Items.AddRange(new object[] {
-            "One",
-            "Two"});
-            this.stopSelect.Location = new System.Drawing.Point(129, 83);
-            this.stopSelect.Name = "stopSelect";
-            this.stopSelect.Size = new System.Drawing.Size(97, 21);
-            this.stopSelect.TabIndex = 14;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(245, 12);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Baud Rate";
             // 
-            // label7
+            // label3
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(49, 120);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(52, 13);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "Prędkość";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(130, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(33, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Parity";
             // 
-            // trackBar1
+            // label1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(107, 106);
-            this.trackBar1.Maximum = 100;
-            this.trackBar1.Minimum = 1;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(190, 45);
-            this.trackBar1.SmallChange = 10;
-            this.trackBar1.TabIndex = 2;
-            this.trackBar1.Value = 1;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(28, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Com";
             // 
-            // servoOnBtn
+            // pomoc
             // 
-            this.servoOnBtn.Location = new System.Drawing.Point(63, 62);
-            this.servoOnBtn.Name = "servoOnBtn";
-            this.servoOnBtn.Size = new System.Drawing.Size(75, 23);
-            this.servoOnBtn.TabIndex = 3;
-            this.servoOnBtn.Text = "servo ON";
-            this.servoOnBtn.UseVisualStyleBackColor = true;
-            this.servoOnBtn.Click += new System.EventHandler(this.servoOnBtn_Click);
+            this.pomoc.Location = new System.Drawing.Point(4, 22);
+            this.pomoc.Name = "pomoc";
+            this.pomoc.Size = new System.Drawing.Size(364, 348);
+            this.pomoc.TabIndex = 4;
+            this.pomoc.Text = "Pomoc";
+            this.pomoc.UseVisualStyleBackColor = true;
             // 
-            // servoOffBtn
+            // contextMenuStrip1
             // 
-            this.servoOffBtn.Location = new System.Drawing.Point(222, 62);
-            this.servoOffBtn.Name = "servoOffBtn";
-            this.servoOffBtn.Size = new System.Drawing.Size(75, 23);
-            this.servoOffBtn.TabIndex = 3;
-            this.servoOffBtn.Text = "servo OFF";
-            this.servoOffBtn.UseVisualStyleBackColor = true;
-            this.servoOffBtn.Click += new System.EventHandler(this.servoOffBtn_Click);
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // jointMoveBtn
-            // 
-            this.jointMoveBtn.Location = new System.Drawing.Point(63, 21);
-            this.jointMoveBtn.Name = "jointMoveBtn";
-            this.jointMoveBtn.Size = new System.Drawing.Size(75, 23);
-            this.jointMoveBtn.TabIndex = 4;
-            this.jointMoveBtn.Text = "JOINT";
-            this.jointMoveBtn.UseVisualStyleBackColor = true;
-            this.jointMoveBtn.Click += new System.EventHandler(this.jointMoveBtn_Click);
-            // 
-            // xyzMoveBtn
-            // 
-            this.xyzMoveBtn.Location = new System.Drawing.Point(222, 21);
-            this.xyzMoveBtn.Name = "xyzMoveBtn";
-            this.xyzMoveBtn.Size = new System.Drawing.Size(75, 23);
-            this.xyzMoveBtn.TabIndex = 4;
-            this.xyzMoveBtn.Text = "XYZ";
-            this.xyzMoveBtn.UseVisualStyleBackColor = true;
-            this.xyzMoveBtn.Click += new System.EventHandler(this.xyzMoveBtn_Click);
-            // 
-            // Form1
+            // AppWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -505,32 +506,34 @@
             this.Controls.Add(this.menu);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.picBoxCameraView);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.MaximizeBox = false;
+            this.Name = "AppWin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Application Window";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxCameraView)).EndInit();
             this.menu.ResumeLayout(false);
             this.glowne.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pomocPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ustawieniaPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parametryPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rozpoznawaniePictureBox)).EndInit();
+            this.rozpoznawanie.ResumeLayout(false);
             this.parametry.ResumeLayout(false);
             this.parametry.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ustawienia.ResumeLayout(false);
             this.ustawienia.PerformLayout();
-            this.rozpoznawanie.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.rozpoznawaniePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parametryPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ustawieniaPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pomocPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -545,7 +548,7 @@
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox picBoxCameraView;
         private System.Windows.Forms.Button start_btn;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button button1;
