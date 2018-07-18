@@ -188,9 +188,9 @@
             this.richTextBox2.BackColor = System.Drawing.SystemColors.Window;
             this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.richTextBox2.Location = new System.Drawing.Point(766, 606);
+            this.richTextBox2.Location = new System.Drawing.Point(766, 561);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(274, 42);
+            this.richTextBox2.Size = new System.Drawing.Size(274, 87);
             this.richTextBox2.TabIndex = 15;
             this.richTextBox2.Text = "";
             // 
@@ -334,7 +334,7 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(107, 106);
+            this.trackBar1.Location = new System.Drawing.Point(107, 109);
             this.trackBar1.Maximum = 100;
             this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
@@ -342,6 +342,7 @@
             this.trackBar1.SmallChange = 10;
             this.trackBar1.TabIndex = 2;
             this.trackBar1.Value = 1;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // label7
             // 
