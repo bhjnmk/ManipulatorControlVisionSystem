@@ -71,6 +71,10 @@
     <Compile Include="ImageProcessing\imageProcessing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RobotControl\MovingRobotXYZ.cs" />
+    <Compile Include="RobotControl\SpeedControl.cs" />
+    <Compile Include="RobotControl\StartCommunication.cs" />
+    <Compile Include="RobotControl\StartStopServo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
