@@ -24,23 +24,31 @@ namespace VisionSystem
         #region RobotVariables 
         string typeOfMove = "J01";
         SerialPort serialPort = new SerialPort();
+
+        public delegate void ShowReceivedDataDelegate(string dataFromRobot);
+        public ShowReceivedDataDelegate showDataDelegate;
         #endregion
 
         #region Classifiers
-        CascadeClassifier fistClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/fist.xml");
+        CascadeClassifier fistClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/haarcascade_frontalface_default.xml");
         CascadeClassifier palmClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/palm.xml");
-        //CascadeClassifier rockClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/rock.xml");
+        CascadeClassifier rockClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Visual Studio 2017/Projects/VisionSystem/VisionSystem/classifier/gesture-victoria.xml");
 
         Rectangle[] rectanglesFist;
         Rectangle[] rectanglesPalm;
         Rectangle[] rectanglesRock;
         #endregion
 
-
         #region Contructor
         public AppWin()
         {
             InitializeComponent();
+        }
+        #endregion
+
+        #region WindowSet
+        private void AppWin_Load(object sender, EventArgs e)
+        {
             Size = new Size(1080, 720);
             StartPosition = FormStartPosition.CenterScreen;
             picBoxCameraView.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -49,10 +57,10 @@ namespace VisionSystem
             {
                 comSelect.Items.Add(port);
             }
-        }
-        #endregion
 
-        #region WindowSet
+            showDataDelegate = new ShowReceivedDataDelegate(ShowReceivedDataMethod);
+        }
+
         private void picBoxCameraView_Paint(object sender, PaintEventArgs e)
         {
             int box_width = Convert.ToInt32(picBoxCameraView.Width);
@@ -91,7 +99,7 @@ namespace VisionSystem
         }
         #endregion
 
-        #region Robot
+        #region Connection with robot
         private void connect_btn_Click(object sender, EventArgs e)
         {
             try
@@ -103,6 +111,8 @@ namespace VisionSystem
                 serialPort.StopBits = (StopBits)Enum.Parse(typeof(StopBits), stopSelect.Text);
 
                 StartCommunication.StartComunicationWithRobot(serialPort);
+
+                serialPort.DataReceived += new SerialDataReceivedEventHandler(serialPort_DataReceived);
             }
             catch (Exception)
             {
@@ -110,7 +120,26 @@ namespace VisionSystem
                 MessageBox.Show("Wybierz wartości dla wszystkich elementów");
             }
         }
+
+        public void ShowReceivedDataMethod(String dataFromRobot)
+        {
+            richTextBoxDataFromRobot.AppendText(dataFromRobot);
+        }
+
+        private void serialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            SerialPort sPort = (SerialPort)sender;
+            string receivedData = sPort.ReadExisting();
+
+            richTextBoxDataFromRobot.Invoke(showDataDelegate, new Object[] { receivedData });
+        }
+
+        private void receivedDataTimer_Tick(object sender, EventArgs e)
+        {
+            serialPort.Write("1;1;PPOSF");
+        }
         #endregion
+
 
         #region WindowEvents
         private void AppWin_FormClosing(object sender, FormClosingEventArgs e)
@@ -123,28 +152,17 @@ namespace VisionSystem
 
             stopStream();
         }
+        #endregion
 
-        private void IPCamera_Click(object sender, EventArgs e)
+        #region Camera Set
+        private void cameraIPBtn_Click(object sender, EventArgs e)
         {
             camera = "ip";
         }
 
-        private void EmbededCamera_Click(object sender, EventArgs e)
+        private void cameraEmbededBtn_Click(object sender, EventArgs e)
         {
             camera = "embeded";
-        }
-
-        private void stop_btn_Click(object sender, EventArgs e)
-        {
-            stopStream();
-        }
-
-        private void stopStream()
-        {
-            if (cameraCapture != null)
-            {
-                cameraCapture = null;
-            }
         }
 
         private void start_btn_Click(object sender, EventArgs e)
@@ -166,6 +184,21 @@ namespace VisionSystem
             }
         }
 
+        private void stop_btn_Click(object sender, EventArgs e)
+        {
+            stopStream();
+        }
+
+        private void stopStream()
+        {
+            if (cameraCapture != null)
+            {
+                cameraCapture = null;
+            }
+        }
+        #endregion
+
+        #region Gesture Recognition
         private void Capture_ImageGrabbed(object sender, EventArgs e)
         {
             try
@@ -177,28 +210,33 @@ namespace VisionSystem
                 Image<Gray, Byte> grayFrame = yccFrame.Convert<Gray, Byte>();
 
                 rectanglesFist = fistClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
-                rectanglesPalm = palmClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
+                //rectanglesPalm = palmClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
                 //rectanglesRock = rockClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
 
                 foreach (var rectangle in rectanglesFist)
                 {
                     yccFrame.Draw(rectangle, new Ycc(122, 222, 12));
-                    richTextBox1.Text = String.Empty + "run";
-                    //richTextBox2.Text = "X = " + rectangle.X + "Y = " + rectangle.Y;
-                    MovingRobotXYZ.MoveRobotXYZ(rectangle, 200, richTextBox2, serialPort);
+                    richTextBoxStatus.Text = String.Empty + "run";
+                    richTextBoxRecognitionData.Text = "X = " + rectangle.X + "Y = " + rectangle.Y;
+                    MovingRobotXYZ.MoveRobotXYZ(rectangle, richTextBoxRecognitionData, serialPort);
                 }
 
-                foreach (var rectangle2 in rectanglesPalm)
-                {
-                    yccFrame.Draw(rectangle2, new Ycc(1, 2, 255));
-                }
+                //foreach (var rectangle2 in rectanglesPalm)
+                //{
+                //    yccFrame.Draw(rectangle2, new Ycc(1, 2, 255));
+                //}
+
+                //foreach (var rectangle2 in rectanglesRock)
+                //{
+                //    yccFrame.Draw(rectangle2, new Ycc(122, 222, 12));
+                //}
 
                 Bitmap bitmap = yccFrame.ToBitmap();
                 bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
                 picBoxCameraView.Image = bitmap;
             }
             catch (Exception)
-            { 
+            {
             }
         }
 
@@ -209,6 +247,7 @@ namespace VisionSystem
         }
         #endregion
 
+        #region Robot Setting
         private void servoOnBtn_Click(object sender, EventArgs e)
         {
             StartStopServo.ServoOn(serialPort);
@@ -233,12 +272,115 @@ namespace VisionSystem
             xyzMoveBtn.Enabled = false;
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void speedBar_Scroll(object sender, EventArgs e)
         {
-            SpeedControl.SpeedChange(trackBar1.Value,serialPort);
-            
+            TrackBar speedBar = (TrackBar)sender;
+            SpeedControl.SpeedChange(speedBar.Value, serialPort);
+        }
+        #endregion
+
+        #region XYZ Manual Control
+        private void XplusBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotXYZ.MoveRobotXYZ(MovingRobotXYZ.XYZenum.Xp, serialPort);
         }
 
-        
+        private void XminusBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotXYZ.MoveRobotXYZ(MovingRobotXYZ.XYZenum.Xm, serialPort);
+        }
+
+        private void YplusBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotXYZ.MoveRobotXYZ(MovingRobotXYZ.XYZenum.Yp, serialPort);
+        }
+
+        private void YminusBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotXYZ.MoveRobotXYZ(MovingRobotXYZ.XYZenum.Ym, serialPort);
+        }
+
+        private void ZplusBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotXYZ.MoveRobotXYZ(MovingRobotXYZ.XYZenum.Zp, serialPort);
+        }
+
+        private void ZminusBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotXYZ.MoveRobotXYZ(MovingRobotXYZ.XYZenum.Zm, serialPort);
+        }
+        #endregion
+
+        private void sendToRobotBtn_Click(object sender, EventArgs e)
+        {
+            SendingCommandsToRobot.SendCommand(richTextBoxCommandSend.Text, serialPort);
+        }
+
+        #region Chwytak
+
+        private void chwytakOnBtn_Click(object sender, EventArgs e)
+        {
+            SendingCommandsToRobot.SendCommand("HNDON1", serialPort);
+        }
+
+        private void chwytakOffBtn_Click(object sender, EventArgs e)
+        {
+            SendingCommandsToRobot.SendCommand("HNDOFF1", serialPort);
+        }
+
+        #endregion
+
+        #region JOINT Manual Control
+        private void J1pBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J1p, serialPort);
+        }
+
+        private void J1mBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J1m, serialPort);
+        }
+
+        private void J2pBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J2p, serialPort);
+        }
+
+        private void J2mBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J2m, serialPort);
+        }
+
+        private void J3pBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J3p, serialPort);
+        }
+
+        private void J3mBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J3m, serialPort);
+        }
+
+        private void J5pBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J5p, serialPort);
+        }
+
+
+        private void J5mBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J5m, serialPort);
+        }
+
+        private void J6pBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J6p, serialPort);
+        }
+
+        private void J6mBtn_Click(object sender, EventArgs e)
+        {
+            MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J6m, serialPort);
+        }
+        #endregion
     }
 }

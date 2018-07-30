@@ -8,20 +8,29 @@ using System.Windows.Forms;
 
 namespace VisionSystem.RobotControl
 {
-    public static class SpeedControl
+    public static class SendingCommandsToRobot
     {
-        public static void SpeedChange(int actualSpeed, SerialPort serialPort)
+        public static void SendCommand(string command, SerialPort serialPort)
         {
-            string speed = "1;1;OVRD=" + actualSpeed + "\r\n";
-
             if (serialPort.IsOpen)
             {
-                serialPort.Write(speed);
+                try
+                {
+                    serialPort.Write("1;1;" + command + "\r\n");
+                }
+                catch
+                {
+
+                }
+                
             }
             else
             {
                 MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
+           
+            
         }
     }
 }
