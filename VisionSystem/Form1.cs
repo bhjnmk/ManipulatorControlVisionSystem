@@ -23,6 +23,8 @@ namespace VisionSystem
         int number = 3;
         string stop = "stop";
         string run = "run";
+        //float scale = 0;
+        int neighbour = 0;
         #endregion
 
         #region RobotVariables 
@@ -30,19 +32,29 @@ namespace VisionSystem
         #endregion
 
         #region Classifier
+        // run 
         CascadeClassifier fistClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/fist.xml");
+        // stop 
         CascadeClassifier palmClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/palm.xml");
-        //CascadeClassifier rockClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/rock.xml");
+        // increase speed
+        CascadeClassifier testClassifier = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/rock-1h.xml");
+        // decrease speed
+        //CascadeClassifier okClassifier = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/gesture-rockNEW.xml");
+        // xyz move typ
+
+        // join move typ
+
 
         Rectangle[] rectanglesFist;
         Rectangle[] rectanglesPalm;
-        Rectangle[] rectanglesRock;
+        Rectangle[] rectanglesTest;
+        Rectangle[] rectanglesOk;
         #endregion
-        
-      
 
-    #region Contructor
-    public AppWin()
+
+
+        #region Contructor
+        public AppWin()
         {
             InitializeComponent();
             Size = new Size(1080, 720);
@@ -154,23 +166,68 @@ namespace VisionSystem
                 pictureBox1.Image = yccFrame.ToBitmap();
                 Image<Gray, Byte> grayFrame = yccFrame.Convert<Gray, Byte>();
                 pictureBox2.Image = grayFrame.ToBitmap();
-
+                
                 rectanglesFist = fistClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
                 rectanglesPalm = palmClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
-                //rectanglesRock = rockClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
+                rectanglesTest = testClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.10, minNeighbors: neighbour, minSize :default(Size), maxSize : default(Size));
                 
                 foreach (var rectangle in rectanglesFist)
                 {
                     yccFrame.Draw(rectangle, new Ycc(122,222,12));
-                    richTextBox1.Text = String.Empty + "run";
                    
-                    if (rectangle.X > 225 & rectangle.X < 300 & rectangle.Y > 150 & rectangle.Y < 225)
+                   
+                    string moveTo = "";
+
+                    if (rectangle.X > 0 & rectangle.X < 75 & rectangle.Y > 150 & rectangle.Y < 225)
                     {
-                        richTextBox2.Text = String.Empty + "menu";
-                        servoOffBtn_Click(sender, e);
+                        richTextBox2.Text = String.Empty + "X minus";
+                        moveTo = "1;1;" + typeOfMove + "; 00;01;00;00";
+                        richTextBox2.Text = moveTo;
 
                     }
-                    //richTextBox1.Text = richTextBox1.Text + xLinear.ToString();
+                    else if (rectangle.X > 425 & rectangle.X < 500 & rectangle.Y > 150 & rectangle.Y < 225)
+                    {
+                        richTextBox2.Text = String.Empty + "X plus";
+                        moveTo = "1;1;" + typeOfMove + ";00;01;00";
+                        richTextBox2.Text = moveTo;
+
+                    }
+                    else if (rectangle.X > 225 & rectangle.X < 300 & rectangle.Y > 300 & rectangle.Y < 375)
+                    {
+                        richTextBox2.Text = String.Empty + "y minus";
+                        moveTo = "1;1;" + typeOfMove + ";00;02;00;00";
+                        richTextBox2.Text = moveTo;
+
+                    }
+                    else if (rectangle.X > 225 & rectangle.X < 300 & rectangle.Y > 0 & rectangle.Y < 75)
+                    {
+                        richTextBox2.Text = String.Empty + "y plus";
+                        moveTo = "1;1;" + typeOfMove + ";00;02;00";
+                        richTextBox2.Text = moveTo;
+
+                    }
+                    else if (rectangle.X > 425 & rectangle.X < 500 & rectangle.Y > 0 & rectangle.Y < 75)
+                    {
+                        richTextBox2.Text = String.Empty + "z minus";
+                        moveTo = "1;1;" + typeOfMove + ";00;04;00;00";
+                        richTextBox2.Text = moveTo;
+
+                    }
+                    else if (rectangle.X > 0 & rectangle.X < 75 & rectangle.Y > 300 & rectangle.Y < 375)
+                    {
+                        richTextBox2.Text = String.Empty + "z plus";
+                        moveTo = "1;1;" + typeOfMove + ";00;04;00";
+                        richTextBox2.Text = moveTo;
+
+                    }
+                    else if (rectangle.X > 225 & rectangle.X < 300 & rectangle.Y > 150 & rectangle.Y < 225)
+                    {
+                        richTextBox2.Text = String.Empty + "menu";
+                        servoOnBtn_Click(sender, e);
+
+                    }
+
+                    richTextBox3.Text = "FIST : x:" + rectangle.X + ",y:" + rectangle.Y;
                 }
 
                 foreach (var rectangle2 in rectanglesPalm)
@@ -178,100 +235,90 @@ namespace VisionSystem
                    
                     yccFrame.Draw(rectangle2, new Ycc(1, 2, 255));
 
-                    servoOnBtn_Click(sender, e);
-                    //richTextBox1.Text = String.Empty + "stop";
-                    //richTextBox2.Text = String.Empty + rectangle2;
-
                     string moveTo = "";
 
                     if (rectangle2.X > 0 & rectangle2.X < 75 & rectangle2.Y >150 & rectangle2.Y <225)
                     {
-                        richTextBox2.Text = String.Empty + "X minus";
-                        moveTo = "1;1;"+ typeOfMove+"; 00;01;00;00";
-                        richTextBox2.Text =  moveTo;
 
                     } else if (rectangle2.X > 425 & rectangle2.X < 500 & rectangle2.Y > 150 & rectangle2.Y < 225)
                     {
-                        richTextBox2.Text = String.Empty + "X plus";
-                        moveTo = "1;1;" + typeOfMove + ";00;01;00";
-                        richTextBox2.Text =  moveTo;
 
                     }
                     else if (rectangle2.X > 225 & rectangle2.X < 300 & rectangle2.Y > 300 & rectangle2.Y < 375)
                     {
-                        richTextBox2.Text = String.Empty + "y minus";
-                        moveTo = "1;1;" + typeOfMove + ";00;02;00;00";
-                        richTextBox2.Text =  moveTo;
-
+                        
                     }
                     else if (rectangle2.X > 225 & rectangle2.X < 300 & rectangle2.Y > 0 & rectangle2.Y < 75)
                     {
-                        richTextBox2.Text = String.Empty + "y plus";
-                        moveTo = "1;1;" + typeOfMove + ";00;02;00";
-                        richTextBox2.Text = moveTo;
-
+                        
                     }
                     else if (rectangle2.X > 425 & rectangle2.X < 500 & rectangle2.Y > 0 & rectangle2.Y < 75)
                     {
-                        richTextBox2.Text = String.Empty + "z minus";
-                        moveTo = "1;1;" + typeOfMove + ";00;04;00;00";
-                        richTextBox2.Text =  moveTo;
-
                     }
                     else if (rectangle2.X > 0 & rectangle2.X < 75 & rectangle2.Y > 300 & rectangle2.Y < 375)
                     {
-                        richTextBox2.Text = String.Empty + "z plus";
-                        moveTo = "1;1;" + typeOfMove + ";00;04;00";
-                        richTextBox2.Text =  moveTo;
+                        
 
                     }
                     else if (rectangle2.X > 225 & rectangle2.X < 300 & rectangle2.Y > 150 & rectangle2.Y < 225)
                     {
-                        richTextBox2.Text = String.Empty + "menu";
-
-                        servoOnBtn_Click(sender, e);
+                        servoOffBtn_Click(sender, e);
 
                     }
-               
-                    richTextBox2.Text = richTextBox2.Text + "\r\n" +"x:" + rectangle2.X + "y:"+ rectangle2.Y ;
+
+                    richTextBox3.Text = "PALM : x:" + rectangle2.X + ",y:" + rectangle2.Y;
+                    
+                }
+
+                
+                foreach (var rectangle3 in rectanglesTest)
+                {
+
+                    yccFrame.Draw(rectangle3, new Ycc(44, 44, 44));
+                    
+                    string moveTo = "";
+
+                    if (rectangle3.X > 0 & rectangle3.X < 75 & rectangle3.Y > 150 & rectangle3.Y < 225)
+                    {
+
+                    }
+                    else if (rectangle3.X > 425 & rectangle3.X < 500 & rectangle3.Y > 150 & rectangle3.Y < 225)
+                    {
+
+                    }
+                    else if (rectangle3.X > 225 & rectangle3.X < 300 & rectangle3.Y > 300 & rectangle3.Y < 375)
+                    {//decrease speed
+                        trackBar1.Value = trackBar1.Value - 1;
+
+                    }
+                    else if (rectangle3.X > 225 & rectangle3.X < 300 & rectangle3.Y > 0 & rectangle3.Y < 75)
+                    {//increase speed
+                        trackBar1.Value = trackBar1.Value + 1;
+                    }
+                    else if (rectangle3.X > 425 & rectangle3.X < 500 & rectangle3.Y > 0 & rectangle3.Y < 75)
+                    {
+                    }
+                    else if (rectangle3.X > 0 & rectangle3.X < 75 & rectangle3.Y > 300 & rectangle3.Y < 375)
+                    {
+
+
+                    }
+                    else if (rectangle3.X > 225 & rectangle3.X < 300 & rectangle3.Y > 150 & rectangle3.Y < 225)
+                    {
+                        //apply speed 
+                        trackBar1_Scroll(sender, e);
+
+                    }
+
+                    richTextBox3.Text = "TEST : x:" + rectangle3.X + "y:" + rectangle3.Y;
 
                     //}
                 }
+                trackBar3_Scroll(sender, e);
 
-                //foreach (var rectangle3 in rectangles3)
-                //{
-
-                //    if (rectangle3.Height >= 80)
-                //    {
-                //        ycc.Draw(rectangle3, new Ycc(185, 148, 185));
-                //        richTextBox1.Text = String.Empty + "rock";
-                //        richTextBox2.Text = richTextBox2.Text + rectangle3;
-                //    }
-
-                //}
-
-
-                //foreach (var rectangle4 in rectangles4)
-                //    {
-                //    if (rectangle4.Height >= 100)
-                //    {
-                //        ycc.Draw(rectangle4, new Ycc(18, 12, 15));
-                //        richTextBox1.Text = String.Empty + "ok";
-                //               //richTextBox2.Text = richTextBox2.Text + rectangle4;
-                //    }
-                //}
-                //foreach (var rectangle5 in rectangles5)
-                //{
-                //    // draw detected locations.
-
-                //    ycc.Draw(rectangle5, new Ycc(138, 210, 138));
-                //    richTextBox1.Text = String.Empty + "victoria";
-
-
-                //}
                 Bitmap bitmap = yccFrame.ToBitmap();
                 bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                picBoxCameraView.Image = bitmap;
+                picBoxCameraView.Image = yccFrame.ToBitmap();
 
             }
             catch (Exception)
@@ -318,7 +365,6 @@ namespace VisionSystem
 
             string openComunication = "1;1;OPEN=melfa " + "\r\n";
             string servoOff = "1;1;SRVON" + "\r\n";
-
             richTextBox2.Text = openComunication + servoOff;
 
         }
@@ -352,6 +398,25 @@ namespace VisionSystem
             string speed = "1;1;OVRD=" + actualSpeed + "\r\n";
             richTextBox2.Text =  speed;
 
+        }
+
+
+        private void glowne_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+       //     scale = 1 + (trackBar3.Value / 100);
+       //     richTextBox2.Text = scale + "," + neighbour;
+       }
+
+        private void trackBar3_Scroll(object sender, EventArgs e)
+        {
+            neighbour = trackBar3.Value;
+            //string xx = neighbour + "";
+            //richTextBox2.Text = xx;
         }
     }
 }

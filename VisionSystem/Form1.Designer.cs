@@ -70,6 +70,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pomoc = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.trackBar3 = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -84,13 +89,15 @@
             this.parametry.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.ustawienia.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(687, 48);
+            this.pictureBox1.Location = new System.Drawing.Point(643, 38);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox1.Size = new System.Drawing.Size(125, 115);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -220,6 +227,7 @@
             this.glowne.TabIndex = 0;
             this.glowne.Text = "Main Menu";
             this.glowne.UseVisualStyleBackColor = true;
+            this.glowne.Click += new System.EventHandler(this.glowne_Click);
             // 
             // pomocPictureBox
             // 
@@ -282,7 +290,11 @@
             this.parametry.Controls.Add(this.jointMoveBtn);
             this.parametry.Controls.Add(this.servoOffBtn);
             this.parametry.Controls.Add(this.servoOnBtn);
+            this.parametry.Controls.Add(this.trackBar3);
+            this.parametry.Controls.Add(this.trackBar2);
             this.parametry.Controls.Add(this.trackBar1);
+            this.parametry.Controls.Add(this.label8);
+            this.parametry.Controls.Add(this.label2);
             this.parametry.Controls.Add(this.label7);
             this.parametry.Location = new System.Drawing.Point(4, 22);
             this.parametry.Name = "parametry";
@@ -499,12 +511,67 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // richTextBox3
+            // 
+            this.richTextBox3.BackColor = System.Drawing.SystemColors.Window;
+            this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.richTextBox3.Location = new System.Drawing.Point(766, 48);
+            this.richTextBox3.Name = "richTextBox3";
+            this.richTextBox3.Size = new System.Drawing.Size(274, 87);
+            this.richTextBox3.TabIndex = 15;
+            this.richTextBox3.Text = "";
+            // 
+            // trackBar2
+            // 
+            this.trackBar2.Location = new System.Drawing.Point(106, 149);
+            this.trackBar2.Maximum = 100;
+            this.trackBar2.Minimum = 5;
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(190, 45);
+            this.trackBar2.SmallChange = 10;
+            this.trackBar2.TabIndex = 2;
+            this.trackBar2.Value = 5;
+            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
+            // 
+            // trackBar3
+            // 
+            this.trackBar3.Location = new System.Drawing.Point(107, 200);
+            this.trackBar3.Maximum = 100;
+            this.trackBar3.Minimum = 1;
+            this.trackBar3.Name = "trackBar3";
+            this.trackBar3.Size = new System.Drawing.Size(190, 45);
+            this.trackBar3.SmallChange = 10;
+            this.trackBar3.TabIndex = 2;
+            this.trackBar3.Value = 1;
+            this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(48, 160);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "scaleFactor";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(44, 200);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "minNeighbours";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
             // AppWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 681);
             this.Controls.Add(this.menu);
+            this.Controls.Add(this.richTextBox3);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.picBoxCameraView);
@@ -535,6 +602,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ustawienia.ResumeLayout(false);
             this.ustawienia.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -582,6 +651,11 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Button xyzMoveBtn;
         private System.Windows.Forms.Button jointMoveBtn;
+        private System.Windows.Forms.RichTextBox richTextBox3;
+        private System.Windows.Forms.TrackBar trackBar3;
+        private System.Windows.Forms.TrackBar trackBar2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label2;
     }
 }
 
