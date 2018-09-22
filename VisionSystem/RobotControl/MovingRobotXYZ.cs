@@ -23,36 +23,35 @@ namespace VisionSystem
 
         public static void MoveRobotXYZ(Rectangle rectangleAroundRecognitionGesture, RichTextBox richTextBoxToCheckWhichAxle, SerialPort serialPort)
         {
-
             if (rectangleAroundRecognitionGesture.X > 425 & rectangleAroundRecognitionGesture.X < 500 & rectangleAroundRecognitionGesture.Y > 150 & rectangleAroundRecognitionGesture.Y < 225)
             {
                 richTextBoxToCheckWhichAxle.Text = "X minus";
-                SendCommandToMoveXYZ_minus("01", serialPort);
+                MoveRobotXYZ(XYZenum.Xm, serialPort);
             }
             else if (rectangleAroundRecognitionGesture.X > 0 & rectangleAroundRecognitionGesture.X < 75 & rectangleAroundRecognitionGesture.Y > 150 & rectangleAroundRecognitionGesture.Y < 225)
             {
                 richTextBoxToCheckWhichAxle.Text = "X plus";
-                SendCommandToMoveXYZ_plus("01", serialPort);
+                MoveRobotXYZ(XYZenum.Xp, serialPort);
             }
             else if (rectangleAroundRecognitionGesture.X > 225 & rectangleAroundRecognitionGesture.X < 300 & rectangleAroundRecognitionGesture.Y > 300 & rectangleAroundRecognitionGesture.Y < 500)
             {
                 richTextBoxToCheckWhichAxle.Text = "y minus";
-                SendCommandToMoveXYZ_minus("02", serialPort);
+                MoveRobotXYZ(XYZenum.Ym, serialPort);
             }
             else if (rectangleAroundRecognitionGesture.X > 225 & rectangleAroundRecognitionGesture.X < 300 & rectangleAroundRecognitionGesture.Y > 0 & rectangleAroundRecognitionGesture.Y < 75)
             {
                 richTextBoxToCheckWhichAxle.Text = "y plus";
-                SendCommandToMoveXYZ_plus("02", serialPort);
+                MoveRobotXYZ(XYZenum.Yp, serialPort);
             }
             else if (rectangleAroundRecognitionGesture.X > 425 & rectangleAroundRecognitionGesture.X < 500 & rectangleAroundRecognitionGesture.Y > 300 & rectangleAroundRecognitionGesture.Y < 500)
             {
                 richTextBoxToCheckWhichAxle.Text = "z minus";
-                SendCommandToMoveXYZ_minus("04", serialPort);
+                MoveRobotXYZ(XYZenum.Zm, serialPort);
             }
             else if (rectangleAroundRecognitionGesture.X > 0 & rectangleAroundRecognitionGesture.X < 75 & rectangleAroundRecognitionGesture.Y > 0 & rectangleAroundRecognitionGesture.Y < 75)
             {
                 richTextBoxToCheckWhichAxle.Text = "z plus";
-                SendCommandToMoveXYZ_plus("04", serialPort);
+                MoveRobotXYZ(XYZenum.Zp, serialPort);
             }
             else
             {
@@ -62,7 +61,6 @@ namespace VisionSystem
 
         public static void MoveRobotXYZ(XYZenum xyzEnum, SerialPort serialPort)
         {
-
             switch (xyzEnum)
             {
                 case XYZenum.Xm:
@@ -96,7 +94,6 @@ namespace VisionSystem
                         break;
                     }
             }
-
         }
 
 
@@ -116,11 +113,11 @@ namespace VisionSystem
         {
             if (serialPort.IsOpen)
             {
-               serialPort.Write("1;1;JOG01;00;" + moveDirection + ";00;00" + "\r\n");
+                serialPort.Write("1;1;JOG01;00;" + moveDirection + ";00;00" + "\r\n");
             }
             else
             {
-               MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

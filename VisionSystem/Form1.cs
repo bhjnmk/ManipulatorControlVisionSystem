@@ -508,7 +508,6 @@ namespace VisionSystem
                 serialPort.Write("1;1;PPOSF" + "\r\n");
             }
         }
-
     }
 }
 
