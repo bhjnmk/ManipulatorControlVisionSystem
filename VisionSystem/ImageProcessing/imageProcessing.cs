@@ -4,24 +4,27 @@ using Emgu.CV.Structure;
 
 namespace VisionSystem.ImageProcessing
 {
-    class imageProcessing
+    public static class ImageProcessing
     {
-        public Image<Ycc, Byte> FindColor(Image<Ycc, Byte> yccimage)
+        public static Image<Hsv, Byte> FindColor(Image<Hsv, Byte> hsvImage)
         {
-            Image<Ycc, Byte> ret = yccimage;
-            var image = yccimage.InRange(new Ycc(30, 135, 85), new Ycc(235, 240, 240));
-            var mat = yccimage.Mat;
+            Image<Hsv, Byte> ret = hsvImage;
+            //blue
+            var image = hsvImage.InRange(new Hsv(80, 0, 0), new Hsv(180, 255, 255));
+            //green
+            //var image = hsvImage.InRange(new Hsv(45, 0, 0), new Hsv(90, 255, 255));
+            var mat = hsvImage.Mat;
             mat.SetTo(new MCvScalar(0), image);
             mat.CopyTo(ret);
-
             return ret;
         }
 
-        public Image<Gray, Byte> ChangeToBinary(Image<Ycc, Byte> fcimage)
+        public static Image<Gray, Byte> ConvertImageToBinary(Image<Hsv, Byte> hsvImage)
         {
-            var mat = fcimage.Mat;
+            var mat = hsvImage.Mat;
             Image<Gray, Byte> gray = mat.ToImage<Gray, Byte>();
-            gray = gray.ThresholdBinary(new Gray(50), new Gray(255)).Not();
+            gray = gray.ThresholdBinary(new Gray(10), new Gray(255)).Not();
+            gray.Erode(8);
             return gray;
         }
     }

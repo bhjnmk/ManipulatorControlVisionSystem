@@ -14,7 +14,9 @@ namespace VisionSystem
         #region CameraVariables
         VideoCapture cameraCapture;
         Image<Bgr, Byte> currentFrame;
-        Image<Ycc, Byte> yccFrame = null;
+        Image<Hsv, Byte> hsvFrame = null;
+        Image<Hsv, Byte> hsvFindColorFrame = null;
+        Image<Gray, Byte> binaryFrame = null;
 
         //MJPEGStream stream;
         MJPEGStream stream;
@@ -24,19 +26,26 @@ namespace VisionSystem
         #region RobotVariables 
         string typeOfMove = "J01";
         SerialPort serialPort = new SerialPort();
+        string[] splitPosition = new string[100];
 
         public delegate void ShowReceivedDataDelegate(string dataFromRobot);
         public ShowReceivedDataDelegate showDataDelegate;
         #endregion
 
         #region Classifiers
-        CascadeClassifier fistClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/haarcascade_frontalface_default.xml");
-        CascadeClassifier palmClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/palm.xml");
-        CascadeClassifier rockClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Visual Studio 2017/Projects/VisionSystem/VisionSystem/classifier/gesture-victoria.xml");
+        CascadeClassifier fistClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Haar-features/cascade_fist.xml");
+        CascadeClassifier palmClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Haar-features/cascade_palm.xml");
+        CascadeClassifier tombClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Haar-features/cascade_tomb.xml");
+        CascadeClassifier twoFingersClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Haar-features/cascade_2fingers.xml");
+        CascadeClassifier fingerClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Haar-features/cascade_finger.xml");
+        CascadeClassifier victoryClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Haar-features/cascade_victory.xml");
 
         Rectangle[] rectanglesFist;
         Rectangle[] rectanglesPalm;
-        Rectangle[] rectanglesRock;
+        Rectangle[] rectanglesTomb;
+        Rectangle[] rectanglesTwoFingers;
+        Rectangle[] rectanglesFinger;
+        Rectangle[] rectanglesVictory;
         #endregion
 
         #region Contructor
@@ -94,7 +103,6 @@ namespace VisionSystem
             using (Pen pen = new Pen(Color.Black, 1))
             {
                 e.Graphics.DrawRectangle(pen, menu);
-
             }
         }
         #endregion
@@ -113,17 +121,28 @@ namespace VisionSystem
                 StartCommunication.StartComunicationWithRobot(serialPort);
 
                 serialPort.DataReceived += new SerialDataReceivedEventHandler(serialPort_DataReceived);
-            }
-            catch (Exception)
-            {
 
-                MessageBox.Show("Wybierz wartości dla wszystkich elementów");
+                diconnect_btn.Visible = true;
+                disconnect_rtxt.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nie udało się nawiązać połączenia. Sprawdź ustawienia połączenia.", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.ToString(), "Error info", MessageBoxButtons.OK);
             }
         }
 
         public void ShowReceivedDataMethod(String dataFromRobot)
         {
             richTextBoxDataFromRobot.AppendText(dataFromRobot);
+            string[] split = dataFromRobot.Split(new char[] { ';' });
+
+            if (split[0] == "QoKX")
+            {
+                Xtxt.Text = split[1] + " mm";
+                Ytxt.Text = split[3] + " mm";
+                Ztxt.Text = split[5] + " mm";
+            }
         }
 
         private void serialPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -136,21 +155,49 @@ namespace VisionSystem
 
         private void receivedDataTimer_Tick(object sender, EventArgs e)
         {
-            serialPort.Write("1;1;PPOSF");
+            if (typeOfMove == "J01")
+            {
+                if (serialPort.IsOpen)
+                {
+                    serialPort.Write("1;1;PPOSF" + "\r\n");
+                }
+
+                else
+                {
+                    if (serialPort.IsOpen)
+                    {
+                        serialPort.Write("1;1;JPOSF" + "\r\n");
+                    }
+                }
+            }
+        }
+
+        private void diconnect_btn_Click(object sender, EventArgs e)
+        {
+            CloseConnection();
+            diconnect_btn.Visible = false;
+            disconnect_rtxt.Visible = false;
         }
         #endregion
 
-
         #region WindowEvents
         private void AppWin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CloseConnection();
+            stopStream();
+        }
+        #endregion
+
+        #region Methods
+        public void CloseConnection()
         {
             if (serialPort.IsOpen)
             {
                 serialPort.Write("1;1;SRVOFF" + "\r\n");
                 serialPort.Close();
-            }
 
-            stopStream();
+            }
+            MessageBox.Show("Zakończono połączenie z robotem", "Connection End", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
@@ -206,32 +253,80 @@ namespace VisionSystem
                 int sizeOfPicBox = Convert.ToInt32(picBoxCameraView.Height);
 
                 currentFrame = cameraCapture.QueryFrame().ToImage<Bgr, Byte>();
-                yccFrame = currentFrame.Convert<Ycc, Byte>();
-                Image<Gray, Byte> grayFrame = yccFrame.Convert<Gray, Byte>();
+                hsvFrame = currentFrame.Convert<Hsv, Byte>();
+                hsvFindColorFrame = ImageProcessing.ImageProcessing.FindColor(hsvFrame);
+                binaryFrame = ImageProcessing.ImageProcessing.ConvertImageToBinary(hsvFindColorFrame);
 
-                rectanglesFist = fistClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
-                //rectanglesPalm = palmClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
-                //rectanglesRock = rockClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
+                rectanglesFist = fistClassifier.DetectMultiScale(binaryFrame, scaleFactor: 1.1, minNeighbors: 12);
+                rectanglesPalm = palmClassifier.DetectMultiScale(binaryFrame, scaleFactor: 1.1, minNeighbors: 12);
+                rectanglesTomb = tombClassifier.DetectMultiScale(binaryFrame, scaleFactor: 1.1, minNeighbors: 12);
+                rectanglesTwoFingers = twoFingersClassifier.DetectMultiScale(binaryFrame, scaleFactor: 1.1, minNeighbors: 12);
+                rectanglesFinger = fingerClassifier.DetectMultiScale(binaryFrame, scaleFactor: 1.1, minNeighbors: 12);
+                rectanglesTwoFingers = victoryClassifier.DetectMultiScale(binaryFrame, scaleFactor: 1.1, minNeighbors: 12);
 
-                foreach (var rectangle in rectanglesFist)
+                foreach (var rectangle in rectanglesPalm)
                 {
-                    yccFrame.Draw(rectangle, new Ycc(122, 222, 12));
-                    richTextBoxStatus.Text = String.Empty + "run";
-                    richTextBoxRecognitionData.Text = "X = " + rectangle.X + "Y = " + rectangle.Y;
+                    currentFrame.Draw(rectangle, new Bgr(50, 255, 50));
+                    richTextBoxStatus.Text = string.Empty + "Run";
+                    richTextBoxRecognitionData.Text = "x = " + rectangle.X + "y = " + rectangle.Y;
                     MovingRobotXYZ.MoveRobotXYZ(rectangle, richTextBoxRecognitionData, serialPort);
                 }
 
-                //foreach (var rectangle2 in rectanglesPalm)
-                //{
-                //    yccFrame.Draw(rectangle2, new Ycc(1, 2, 255));
-                //}
+                foreach (var rectangle in rectanglesFist)
+                {
+                    currentFrame.Draw(rectangle, new Bgr(255, 0, 0));
+                    richTextBoxStatus.Text = string.Empty + "Stop";
+                }
 
-                //foreach (var rectangle2 in rectanglesRock)
-                //{
-                //    yccFrame.Draw(rectangle2, new Ycc(122, 222, 12));
-                //}
+                foreach (var rectangle in rectanglesTomb)
+                {
+                    currentFrame.Draw(rectangle, new Bgr(128, 0, 128));
+                    richTextBoxStatus.Text = string.Empty + "Chwytak ON";
+                    SendingCommandsToRobot.SendCommand("HNDOFF1", serialPort);
+                }
 
-                Bitmap bitmap = yccFrame.ToBitmap();
+                foreach (var rectangle in rectanglesTwoFingers)
+                {
+                    currentFrame.Draw(rectangle, new Bgr(75, 0, 130));
+                    richTextBoxStatus.Text = string.Empty + "Chwytak OFF";
+                    SendingCommandsToRobot.SendCommand("HNDON1", serialPort);
+                }
+
+                foreach (var rectangle in rectanglesVictory)
+                {
+                    currentFrame.Draw(rectangle, new Bgr(0, 0, 128));
+                    int actualSpeed = Convert.ToInt32(speedTxtBox.Text);
+                    int newSpeed;
+                    if (actualSpeed == 100)
+                    {
+                        newSpeed = 100;
+                    }
+                    else
+                    {
+                        newSpeed = actualSpeed + 10;
+                    }
+
+                    SpeedControl.SpeedChange(newSpeed, serialPort, speedTxtBox);
+                }
+
+                foreach (var rectangle in rectanglesFinger)
+                {
+                    currentFrame.Draw(rectangle, new Bgr(135, 200, 255));
+                    int actualSpeed = Convert.ToInt32(speedTxtBox.Text);
+                    int newSpeed;
+                    if (actualSpeed == 0)
+                    {
+                        newSpeed = 0;
+                    }
+                    else
+                    {
+                        newSpeed = actualSpeed - 10;
+                    }
+
+                    SpeedControl.SpeedChange(newSpeed, serialPort, speedTxtBox);
+                }
+
+                Bitmap bitmap = currentFrame.ToBitmap();
                 bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
                 picBoxCameraView.Image = bitmap;
             }
@@ -275,7 +370,22 @@ namespace VisionSystem
         private void speedBar_Scroll(object sender, EventArgs e)
         {
             TrackBar speedBar = (TrackBar)sender;
-            SpeedControl.SpeedChange(speedBar.Value, serialPort);
+            if (speedBar.Name == "speedbarJoint")
+            {
+                speedJ_txt.Text = speedBar.Value.ToString() + " %";
+            }
+            else
+            {
+                speedXYX_txt.Text = speedBar.Value.ToString() + " %";
+            }
+            try
+            {
+                SpeedControl.SpeedChange(speedBar.Value, serialPort);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wystąpił błąd!\n" + ex.ToString(), "Error", MessageBoxButtons.OK);
+            }
         }
         #endregion
 
@@ -320,12 +430,12 @@ namespace VisionSystem
 
         private void chwytakOnBtn_Click(object sender, EventArgs e)
         {
-            SendingCommandsToRobot.SendCommand("HNDON1", serialPort);
+            SendingCommandsToRobot.SendCommand("HNDOFF1", serialPort);
         }
 
         private void chwytakOffBtn_Click(object sender, EventArgs e)
         {
-            SendingCommandsToRobot.SendCommand("HNDOFF1", serialPort);
+            SendingCommandsToRobot.SendCommand("HNDON1", serialPort);
         }
 
         #endregion
@@ -381,6 +491,16 @@ namespace VisionSystem
         {
             MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J6m, serialPort);
         }
+
         #endregion
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (serialPort.IsOpen)
+            {
+                serialPort.Write("1;1;PPOSF" + "\r\n");
+            }
+        }
     }
 }
+

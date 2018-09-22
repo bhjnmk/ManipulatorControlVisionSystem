@@ -23,5 +23,20 @@ namespace VisionSystem.RobotControl
                 MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        public static void SpeedChange(int actualSpeed, SerialPort serialPort, TextBox speedTextBox)
+        {
+            string speed = "1;1;OVRD=" + actualSpeed + "\r\n";
+
+            if (serialPort.IsOpen)
+            {
+                serialPort.Write(speed);
+                speedTextBox.Text = speed;
+            }
+            else
+            {
+                MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

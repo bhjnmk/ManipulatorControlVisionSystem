@@ -104,11 +104,11 @@ namespace VisionSystem
         {
             if (serialPort.IsOpen)
             {
-                //serialPort.Write("1;1;JOG01;00;00;" + moveDirection + ";00" + "\r\n");
+                serialPort.Write("1;1;JOG01;00;00;" + moveDirection + ";00" + "\r\n");
             }
             else
             {
-                //MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -116,11 +116,11 @@ namespace VisionSystem
         {
             if (serialPort.IsOpen)
             {
-               // serialPort.Write("1;1;JOG01;00;" + moveDirection + ";00;00" + "\r\n");
+               serialPort.Write("1;1;JOG01;00;" + moveDirection + ";00;00" + "\r\n");
             }
             else
             {
-               // MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -22,15 +22,11 @@ namespace VisionSystem.RobotControl
                 {
 
                 }
-                
             }
             else
             {
                 MessageBox.Show("Błąd komunikacji z robotem", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
-           
-            
         }
     }
 }

@@ -18,9 +18,9 @@ namespace VisionSystem.RobotControl
                 MessageBox.Show("Połączono z " + serialPort.PortName);
 
                 serialPort.Write("1;1;OPEN=melfa" + "\r\n");   //otwarcie połączenia z robotem
+                serialPort.Write("1;1;CNTLON" + "\r\n");       //zezwolenie na sterowanie z urządzenia zewnętrznego
                 serialPort.Write("1;1;SRVOFF" + "\r\n");       //wyłączenie serwomechanizmów
                 serialPort.Write("1;1;OVRD=0" + "\r\n");       //ustawienie prędkości 0
-                serialPort.Write("1;1;CNTLON" + "\r\n");       //zezwolenie na sterowanie z urządzenia zewnętrznego
             }
             catch (Exception ex)
             {

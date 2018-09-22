@@ -68,7 +68,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImageProcessing\imageProcessing.cs" />
+    <Compile Include="ImageProcessing\ImageProcessing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotControl\MovingRobotJoint.cs" />
