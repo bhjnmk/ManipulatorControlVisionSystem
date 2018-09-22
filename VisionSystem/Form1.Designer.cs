@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWin));
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.positionDataTimer = new System.Windows.Forms.Timer(this.components);
             this.tabPageCommands = new System.Windows.Forms.TabPage();
             this.richTextBoxDataFromRobot = new System.Windows.Forms.RichTextBox();
@@ -53,7 +52,6 @@
             this.speedXYX_txt = new System.Windows.Forms.TextBox();
             this.richTextBox8 = new System.Windows.Forms.RichTextBox();
             this.speedBarXYZ = new System.Windows.Forms.TrackBar();
-            this.label2 = new System.Windows.Forms.Label();
             this.servoOffXYZBtn = new System.Windows.Forms.Button();
             this.servoOnXYZBtn = new System.Windows.Forms.Button();
             this.chwytakOffXYZBtn = new System.Windows.Forms.Button();
@@ -66,10 +64,11 @@
             this.XplusBtn = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tabPageRecog = new System.Windows.Forms.TabPage();
+            this.speedTxtBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.start_btn = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.xyzMoveBtn = new System.Windows.Forms.Button();
@@ -83,7 +82,6 @@
             this.richTextBoxStatus = new System.Windows.Forms.RichTextBox();
             this.tabPageCOM = new System.Windows.Forms.TabPage();
             this.disconnect_rtxt = new System.Windows.Forms.RichTextBox();
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.diconnect_btn = new System.Windows.Forms.Button();
@@ -101,7 +99,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-<<<<<<< HEAD
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageJoint = new System.Windows.Forms.TabPage();
             this.textBox17 = new System.Windows.Forms.TextBox();
@@ -135,26 +132,12 @@
             this.J1pBtn = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.positionCheckTimer = new System.Windows.Forms.Timer(this.components);
-            this.label12 = new System.Windows.Forms.Label();
-            this.speedTxtBox = new System.Windows.Forms.TextBox();
             this.tabPageCommands.SuspendLayout();
             this.tabPageXYZ.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedBarXYZ)).BeginInit();
-=======
-            this.pomoc = new System.Windows.Forms.TabPage();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.trackBar3 = new System.Windows.Forms.TrackBar();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.menuStrip1.SuspendLayout();
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tabPageRecog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxCameraView)).BeginInit();
-<<<<<<< HEAD
             this.tabPageCOM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -164,53 +147,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.speedbarJoint)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // contextMenuStrip1
-=======
-            this.menu.SuspendLayout();
-            this.glowne.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pomocPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ustawieniaPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parametryPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rozpoznawaniePictureBox)).BeginInit();
-            this.rozpoznawanie.SuspendLayout();
-            this.parametry.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            this.ustawienia.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(643, 38);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(125, 115);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cameraToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1064, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // cameraToolStripMenuItem
-            // 
-            this.cameraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startToolStripMenuItem,
-            this.stopToolStripMenuItem});
-            this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.cameraToolStripMenuItem.Text = "Camera";
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // positionDataTimer
             // 
@@ -318,7 +254,6 @@
             this.tabPageXYZ.Controls.Add(this.speedXYX_txt);
             this.tabPageXYZ.Controls.Add(this.richTextBox8);
             this.tabPageXYZ.Controls.Add(this.speedBarXYZ);
-            this.tabPageXYZ.Controls.Add(this.label2);
             this.tabPageXYZ.Controls.Add(this.servoOffXYZBtn);
             this.tabPageXYZ.Controls.Add(this.servoOnXYZBtn);
             this.tabPageXYZ.Controls.Add(this.chwytakOffXYZBtn);
@@ -456,16 +391,6 @@
             this.speedBarXYZ.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.speedBarXYZ.Value = 1;
             this.speedBarXYZ.Scroll += new System.EventHandler(this.speedBar_Scroll);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(43, 264);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(165, 25);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Ustaw prędkość";
             // 
             // servoOffXYZBtn
             // 
@@ -610,7 +535,6 @@
             this.tabPageRecog.Controls.Add(this.label11);
             this.tabPageRecog.Controls.Add(this.label9);
             this.tabPageRecog.Controls.Add(this.label7);
-            this.tabPageRecog.Controls.Add(this.label8);
             this.tabPageRecog.Controls.Add(this.start_btn);
             this.tabPageRecog.Controls.Add(this.button1);
             this.tabPageRecog.Controls.Add(this.xyzMoveBtn);
@@ -629,6 +553,24 @@
             this.tabPageRecog.Size = new System.Drawing.Size(1056, 653);
             this.tabPageRecog.TabIndex = 0;
             this.tabPageRecog.Text = "Sterowanie gestami";
+            // 
+            // speedTxtBox
+            // 
+            this.speedTxtBox.Location = new System.Drawing.Point(859, 278);
+            this.speedTxtBox.Name = "speedTxtBox";
+            this.speedTxtBox.Size = new System.Drawing.Size(110, 31);
+            this.speedTxtBox.TabIndex = 27;
+            this.speedTxtBox.Text = "0";
+            this.speedTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(822, 250);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(194, 25);
+            this.label12.TabIndex = 26;
+            this.label12.Text = "Prędkość [0-100%]";
             // 
             // label11
             // 
@@ -660,16 +602,6 @@
             this.label7.TabIndex = 23;
             this.label7.Text = "Wybór kamery";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label8.Location = new System.Drawing.Point(620, 155);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(138, 25);
-            this.label8.TabIndex = 22;
-            this.label8.Text = "Rozpoznanie";
-            // 
             // start_btn
             // 
             this.start_btn.BackColor = System.Drawing.Color.Green;
@@ -696,123 +628,6 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.stop_btn_Click);
             // 
-<<<<<<< HEAD
-=======
-            // richTextBox2
-            // 
-            this.richTextBox2.BackColor = System.Drawing.SystemColors.Window;
-            this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.richTextBox2.Location = new System.Drawing.Point(766, 561);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(274, 87);
-            this.richTextBox2.TabIndex = 15;
-            this.richTextBox2.Text = "";
-            // 
-            // menu
-            // 
-            this.menu.Controls.Add(this.glowne);
-            this.menu.Controls.Add(this.rozpoznawanie);
-            this.menu.Controls.Add(this.parametry);
-            this.menu.Controls.Add(this.ustawienia);
-            this.menu.Controls.Add(this.pomoc);
-            this.menu.Location = new System.Drawing.Point(668, 181);
-            this.menu.Name = "menu";
-            this.menu.SelectedIndex = 0;
-            this.menu.Size = new System.Drawing.Size(372, 374);
-            this.menu.TabIndex = 16;
-            // 
-            // glowne
-            // 
-            this.glowne.Controls.Add(this.pomocPictureBox);
-            this.glowne.Controls.Add(this.ustawieniaPictureBox);
-            this.glowne.Controls.Add(this.parametryPictureBox);
-            this.glowne.Controls.Add(this.rozpoznawaniePictureBox);
-            this.glowne.Location = new System.Drawing.Point(4, 22);
-            this.glowne.Name = "glowne";
-            this.glowne.Padding = new System.Windows.Forms.Padding(3);
-            this.glowne.Size = new System.Drawing.Size(364, 348);
-            this.glowne.TabIndex = 0;
-            this.glowne.Text = "Main Menu";
-            this.glowne.UseVisualStyleBackColor = true;
-            this.glowne.Click += new System.EventHandler(this.glowne_Click);
-            // 
-            // pomocPictureBox
-            // 
-            this.pomocPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("pomocPictureBox.Image")));
-            this.pomocPictureBox.Location = new System.Drawing.Point(275, 54);
-            this.pomocPictureBox.Name = "pomocPictureBox";
-            this.pomocPictureBox.Size = new System.Drawing.Size(75, 75);
-            this.pomocPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pomocPictureBox.TabIndex = 5;
-            this.pomocPictureBox.TabStop = false;
-            this.pomocPictureBox.Click += new System.EventHandler(this.pomocPictureBox_Click);
-            // 
-            // ustawieniaPictureBox
-            // 
-            this.ustawieniaPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("ustawieniaPictureBox.Image")));
-            this.ustawieniaPictureBox.Location = new System.Drawing.Point(189, 55);
-            this.ustawieniaPictureBox.Name = "ustawieniaPictureBox";
-            this.ustawieniaPictureBox.Size = new System.Drawing.Size(75, 75);
-            this.ustawieniaPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ustawieniaPictureBox.TabIndex = 2;
-            this.ustawieniaPictureBox.TabStop = false;
-            this.ustawieniaPictureBox.Click += new System.EventHandler(this.ustawieniaPictureBox_Click);
-            // 
-            // parametryPictureBox
-            // 
-            this.parametryPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("parametryPictureBox.Image")));
-            this.parametryPictureBox.Location = new System.Drawing.Point(102, 54);
-            this.parametryPictureBox.Name = "parametryPictureBox";
-            this.parametryPictureBox.Size = new System.Drawing.Size(75, 75);
-            this.parametryPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.parametryPictureBox.TabIndex = 1;
-            this.parametryPictureBox.TabStop = false;
-            this.parametryPictureBox.Click += new System.EventHandler(this.parametryPictureBox_Click);
-            // 
-            // rozpoznawaniePictureBox
-            // 
-            this.rozpoznawaniePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("rozpoznawaniePictureBox.Image")));
-            this.rozpoznawaniePictureBox.Location = new System.Drawing.Point(15, 54);
-            this.rozpoznawaniePictureBox.Name = "rozpoznawaniePictureBox";
-            this.rozpoznawaniePictureBox.Size = new System.Drawing.Size(75, 75);
-            this.rozpoznawaniePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.rozpoznawaniePictureBox.TabIndex = 0;
-            this.rozpoznawaniePictureBox.TabStop = false;
-            this.rozpoznawaniePictureBox.Click += new System.EventHandler(this.rozpoznawaniePictureBox_Click);
-            // 
-            // rozpoznawanie
-            // 
-            this.rozpoznawanie.Controls.Add(this.start_btn);
-            this.rozpoznawanie.Controls.Add(this.button1);
-            this.rozpoznawanie.Location = new System.Drawing.Point(4, 22);
-            this.rozpoznawanie.Name = "rozpoznawanie";
-            this.rozpoznawanie.Size = new System.Drawing.Size(364, 348);
-            this.rozpoznawanie.TabIndex = 3;
-            this.rozpoznawanie.Text = "Rozpoznawanie";
-            this.rozpoznawanie.UseVisualStyleBackColor = true;
-            // 
-            // parametry
-            // 
-            this.parametry.Controls.Add(this.xyzMoveBtn);
-            this.parametry.Controls.Add(this.jointMoveBtn);
-            this.parametry.Controls.Add(this.servoOffBtn);
-            this.parametry.Controls.Add(this.servoOnBtn);
-            this.parametry.Controls.Add(this.trackBar3);
-            this.parametry.Controls.Add(this.trackBar2);
-            this.parametry.Controls.Add(this.trackBar1);
-            this.parametry.Controls.Add(this.label8);
-            this.parametry.Controls.Add(this.label2);
-            this.parametry.Controls.Add(this.label7);
-            this.parametry.Location = new System.Drawing.Point(4, 22);
-            this.parametry.Name = "parametry";
-            this.parametry.Padding = new System.Windows.Forms.Padding(3);
-            this.parametry.Size = new System.Drawing.Size(364, 348);
-            this.parametry.TabIndex = 1;
-            this.parametry.Text = "Paramtery";
-            this.parametry.UseVisualStyleBackColor = true;
-            // 
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
             // xyzMoveBtn
             // 
             this.xyzMoveBtn.BackColor = System.Drawing.Color.Olive;
@@ -918,7 +733,6 @@
             // tabPageCOM
             // 
             this.tabPageCOM.Controls.Add(this.disconnect_rtxt);
-            this.tabPageCOM.Controls.Add(this.richTextBox3);
             this.tabPageCOM.Controls.Add(this.richTextBox2);
             this.tabPageCOM.Controls.Add(this.richTextBox1);
             this.tabPageCOM.Controls.Add(this.diconnect_btn);
@@ -954,16 +768,6 @@
             this.disconnect_rtxt.TabIndex = 41;
             this.disconnect_rtxt.Text = "Aby zakończyć połączenie \nnaciśnij przycisk \"Rozłącz\".";
             this.disconnect_rtxt.Visible = false;
-            // 
-            // richTextBox3
-            // 
-            this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.richTextBox3.Location = new System.Drawing.Point(28, 512);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(329, 57);
-            this.richTextBox3.TabIndex = 40;
-            this.richTextBox3.Text = "Następnie naciśnij przycisk \"Połącz\", \naby nawiązać połączenie z robotem.";
             // 
             // richTextBox2
             // 
@@ -1538,97 +1342,12 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(822, 250);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(194, 25);
-            this.label12.TabIndex = 26;
-            this.label12.Text = "Prędkość [0-100%]";
-            // 
-            // speedTxtBox
-            // 
-            this.speedTxtBox.Location = new System.Drawing.Point(859, 278);
-            this.speedTxtBox.Name = "speedTxtBox";
-            this.speedTxtBox.Size = new System.Drawing.Size(110, 31);
-            this.speedTxtBox.TabIndex = 27;
-            this.speedTxtBox.Text = "0";
-            this.speedTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // richTextBox3
-            // 
-            this.richTextBox3.BackColor = System.Drawing.SystemColors.Window;
-            this.richTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.richTextBox3.Location = new System.Drawing.Point(766, 48);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(274, 87);
-            this.richTextBox3.TabIndex = 15;
-            this.richTextBox3.Text = "";
-            // 
-            // trackBar2
-            // 
-            this.trackBar2.Location = new System.Drawing.Point(106, 149);
-            this.trackBar2.Maximum = 100;
-            this.trackBar2.Minimum = 5;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(190, 45);
-            this.trackBar2.SmallChange = 10;
-            this.trackBar2.TabIndex = 2;
-            this.trackBar2.Value = 5;
-            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
-            // 
-            // trackBar3
-            // 
-            this.trackBar3.Location = new System.Drawing.Point(107, 200);
-            this.trackBar3.Maximum = 100;
-            this.trackBar3.Minimum = 1;
-            this.trackBar3.Name = "trackBar3";
-            this.trackBar3.Size = new System.Drawing.Size(190, 45);
-            this.trackBar3.SmallChange = 10;
-            this.trackBar3.TabIndex = 2;
-            this.trackBar3.Value = 1;
-            this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(48, 160);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "scaleFactor";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(44, 200);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(77, 13);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "minNeighbours";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
             // AppWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 681);
-<<<<<<< HEAD
             this.Controls.Add(this.tabControl);
-=======
-            this.Controls.Add(this.menu);
-            this.Controls.Add(this.richTextBox3);
-            this.Controls.Add(this.richTextBox2);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.picBoxCameraView);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
             this.MaximizeBox = false;
             this.Name = "AppWin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1643,7 +1362,6 @@
             this.tabPageRecog.ResumeLayout(false);
             this.tabPageRecog.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxCameraView)).EndInit();
-<<<<<<< HEAD
             this.tabPageCOM.ResumeLayout(false);
             this.tabPageCOM.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -1654,35 +1372,17 @@
             this.tabPageJoint.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedbarJoint)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-=======
-            this.menu.ResumeLayout(false);
-            this.glowne.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pomocPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ustawieniaPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parametryPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rozpoznawaniePictureBox)).EndInit();
-            this.rozpoznawanie.ResumeLayout(false);
-            this.parametry.ResumeLayout(false);
-            this.parametry.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            this.ustawienia.ResumeLayout(false);
-            this.ustawienia.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Timer positionDataTimer;
         private System.Windows.Forms.TabPage tabPageCommands;
         private System.Windows.Forms.Button sendToRobotBtn;
         private System.Windows.Forms.RichTextBox richTextBoxCommandSend;
         private System.Windows.Forms.TabPage tabPageXYZ;
         private System.Windows.Forms.TrackBar speedBarXYZ;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button servoOffXYZBtn;
         private System.Windows.Forms.Button servoOnXYZBtn;
         private System.Windows.Forms.Button chwytakOffXYZBtn;
@@ -1734,7 +1434,6 @@
         private System.Windows.Forms.Button diconnect_btn;
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.RichTextBox disconnect_rtxt;
-        private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.RichTextBox richTextBox7;
         private System.Windows.Forms.RichTextBox richTextBox6;
         private System.Windows.Forms.RichTextBox richTextBox5;
@@ -1760,7 +1459,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button start_btn;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button xyzMoveBtn;
