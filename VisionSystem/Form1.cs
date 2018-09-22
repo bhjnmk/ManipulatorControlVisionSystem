@@ -20,18 +20,14 @@ namespace VisionSystem
 
         //MJPEGStream stream;
         MJPEGStream stream;
-<<<<<<< HEAD
+
         string camera = "embeded";
-=======
-        string camera = "";
         int xLinear = 1;
         int yLinear = 1;
         int number = 3;
         string stop = "stop";
         string run = "run";
         //float scale = 0;
-        int neighbour = 0;
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
         #endregion
 
         #region RobotVariables 
@@ -43,7 +39,6 @@ namespace VisionSystem
         public ShowReceivedDataDelegate showDataDelegate;
         #endregion
 
-<<<<<<< HEAD
         #region Classifiers
         CascadeClassifier fistClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Haar-features/cascade_fist.xml");
         CascadeClassifier palmClassifier = new CascadeClassifier("C:/Users/Magda/Documents/Haar-features/cascade_palm.xml");
@@ -60,30 +55,6 @@ namespace VisionSystem
         Rectangle[] rectanglesVictory;
         #endregion
 
-=======
-        #region Classifier
-        // run 
-        CascadeClassifier fistClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/fist.xml");
-        // stop 
-        CascadeClassifier palmClassifier = new CascadeClassifier("C:/Emgu/emgucv-windesktop 3.4.1.2976/etc/haarcascades/palm.xml");
-        // increase speed
-        CascadeClassifier testClassifier = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/rock-1h.xml");
-        // decrease speed
-        //CascadeClassifier okClassifier = new CascadeClassifier("C:/Users/Zajkos/source/VisionSystem/VisionSystem/classifier/gesture-rockNEW.xml");
-        // xyz move typ
-
-        // join move typ
-
-
-        Rectangle[] rectanglesFist;
-        Rectangle[] rectanglesPalm;
-        Rectangle[] rectanglesTest;
-        Rectangle[] rectanglesOk;
-        #endregion
-
-
-
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
         #region Contructor
         public AppWin()
         {
@@ -289,7 +260,6 @@ namespace VisionSystem
                 int sizeOfPicBox = Convert.ToInt32(picBoxCameraView.Height);
 
                 currentFrame = cameraCapture.QueryFrame().ToImage<Bgr, Byte>();
-<<<<<<< HEAD
                 hsvFrame = currentFrame.Convert<Hsv, Byte>();
                 hsvFindColorFrame = ImageProcessing.ImageProcessing.FindColor(hsvFrame);
                 binaryFrame = ImageProcessing.ImageProcessing.ConvertImageToBinary(hsvFindColorFrame);
@@ -371,146 +341,6 @@ namespace VisionSystem
             {
             }
         }
-=======
-                yccFrame = currentFrame.Convert<Ycc, Byte>();
-                pictureBox1.Image = yccFrame.ToBitmap();
-                Image<Gray, Byte> grayFrame = yccFrame.Convert<Gray, Byte>();
-                pictureBox2.Image = grayFrame.ToBitmap();
-                
-                rectanglesFist = fistClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
-                rectanglesPalm = palmClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.2, minNeighbors: 12);
-                rectanglesTest = testClassifier.DetectMultiScale(grayFrame, scaleFactor: 1.10, minNeighbors: neighbour, minSize :default(Size), maxSize : default(Size));
-                
-                foreach (var rectangle in rectanglesFist)
-                {
-                    yccFrame.Draw(rectangle, new Ycc(122,222,12));
-                   
-                   
-                    string moveTo = "";
-
-                    if (rectangle.X > 0 & rectangle.X < 75 & rectangle.Y > 150 & rectangle.Y < 225)
-                    {
-                        richTextBox2.Text = String.Empty + "X minus";
-                        moveTo = "1;1;" + typeOfMove + "; 00;01;00;00";
-                        richTextBox2.Text = moveTo;
-
-                    }
-                    else if (rectangle.X > 425 & rectangle.X < 500 & rectangle.Y > 150 & rectangle.Y < 225)
-                    {
-                        richTextBox2.Text = String.Empty + "X plus";
-                        moveTo = "1;1;" + typeOfMove + ";00;01;00";
-                        richTextBox2.Text = moveTo;
-
-                    }
-                    else if (rectangle.X > 225 & rectangle.X < 300 & rectangle.Y > 300 & rectangle.Y < 375)
-                    {
-                        richTextBox2.Text = String.Empty + "y minus";
-                        moveTo = "1;1;" + typeOfMove + ";00;02;00;00";
-                        richTextBox2.Text = moveTo;
-
-                    }
-                    else if (rectangle.X > 225 & rectangle.X < 300 & rectangle.Y > 0 & rectangle.Y < 75)
-                    {
-                        richTextBox2.Text = String.Empty + "y plus";
-                        moveTo = "1;1;" + typeOfMove + ";00;02;00";
-                        richTextBox2.Text = moveTo;
-
-                    }
-                    else if (rectangle.X > 425 & rectangle.X < 500 & rectangle.Y > 0 & rectangle.Y < 75)
-                    {
-                        richTextBox2.Text = String.Empty + "z minus";
-                        moveTo = "1;1;" + typeOfMove + ";00;04;00;00";
-                        richTextBox2.Text = moveTo;
-
-                    }
-                    else if (rectangle.X > 0 & rectangle.X < 75 & rectangle.Y > 300 & rectangle.Y < 375)
-                    {
-                        richTextBox2.Text = String.Empty + "z plus";
-                        moveTo = "1;1;" + typeOfMove + ";00;04;00";
-                        richTextBox2.Text = moveTo;
-
-                    }
-                    else if (rectangle.X > 225 & rectangle.X < 300 & rectangle.Y > 150 & rectangle.Y < 225)
-                    {
-                        richTextBox2.Text = String.Empty + "menu";
-                        servoOnBtn_Click(sender, e);
-
-                    }
-
-                    richTextBox3.Text = "FIST : x:" + rectangle.X + ",y:" + rectangle.Y;
-                }
-
-                foreach (var rectangle2 in rectanglesPalm)
-                {
-                   
-                    yccFrame.Draw(rectangle2, new Ycc(1, 2, 255));
-
-                    string moveTo = "";
-
-                    if (rectangle2.X > 0 & rectangle2.X < 75 & rectangle2.Y >150 & rectangle2.Y <225)
-                    {
-
-                    } else if (rectangle2.X > 425 & rectangle2.X < 500 & rectangle2.Y > 150 & rectangle2.Y < 225)
-                    {
-
-                    }
-                    else if (rectangle2.X > 225 & rectangle2.X < 300 & rectangle2.Y > 300 & rectangle2.Y < 375)
-                    {
-                        
-                    }
-                    else if (rectangle2.X > 225 & rectangle2.X < 300 & rectangle2.Y > 0 & rectangle2.Y < 75)
-                    {
-                        
-                    }
-                    else if (rectangle2.X > 425 & rectangle2.X < 500 & rectangle2.Y > 0 & rectangle2.Y < 75)
-                    {
-                    }
-                    else if (rectangle2.X > 0 & rectangle2.X < 75 & rectangle2.Y > 300 & rectangle2.Y < 375)
-                    {
-                        
-
-                    }
-                    else if (rectangle2.X > 225 & rectangle2.X < 300 & rectangle2.Y > 150 & rectangle2.Y < 225)
-                    {
-                        servoOffBtn_Click(sender, e);
-
-                    }
-
-                    richTextBox3.Text = "PALM : x:" + rectangle2.X + ",y:" + rectangle2.Y;
-                    
-                }
-
-                
-                foreach (var rectangle3 in rectanglesTest)
-                {
-
-                    yccFrame.Draw(rectangle3, new Ycc(44, 44, 44));
-                    
-                    string moveTo = "";
-
-                    if (rectangle3.X > 0 & rectangle3.X < 75 & rectangle3.Y > 150 & rectangle3.Y < 225)
-                    {
-
-                    }
-                    else if (rectangle3.X > 425 & rectangle3.X < 500 & rectangle3.Y > 150 & rectangle3.Y < 225)
-                    {
-
-                    }
-                    else if (rectangle3.X > 225 & rectangle3.X < 300 & rectangle3.Y > 300 & rectangle3.Y < 375)
-                    {//decrease speed
-                        trackBar1.Value = trackBar1.Value - 1;
-
-                    }
-                    else if (rectangle3.X > 225 & rectangle3.X < 300 & rectangle3.Y > 0 & rectangle3.Y < 75)
-                    {//increase speed
-                        trackBar1.Value = trackBar1.Value + 1;
-                    }
-                    else if (rectangle3.X > 425 & rectangle3.X < 500 & rectangle3.Y > 0 & rectangle3.Y < 75)
-                    {
-                    }
-                    else if (rectangle3.X > 0 & rectangle3.X < 75 & rectangle3.Y > 300 & rectangle3.Y < 375)
-                    {
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
 
         private void Stream_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
@@ -519,7 +349,6 @@ namespace VisionSystem
         }
         #endregion
 
-<<<<<<< HEAD
         #region Robot Setting
         private void servoOnBtn_Click(object sender, EventArgs e)
         {
@@ -544,25 +373,6 @@ namespace VisionSystem
             jointMoveBtn.Enabled = true;
             xyzMoveBtn.Enabled = false;
         }
-=======
-                    }
-                    else if (rectangle3.X > 225 & rectangle3.X < 300 & rectangle3.Y > 150 & rectangle3.Y < 225)
-                    {
-                        //apply speed 
-                        trackBar1_Scroll(sender, e);
-
-                    }
-
-                    richTextBox3.Text = "TEST : x:" + rectangle3.X + "y:" + rectangle3.Y;
-
-                    //}
-                }
-                trackBar3_Scroll(sender, e);
-
-                Bitmap bitmap = yccFrame.ToBitmap();
-                bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                picBoxCameraView.Image = yccFrame.ToBitmap();
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
 
         private void speedBar_Scroll(object sender, EventArgs e)
         {
@@ -635,7 +445,6 @@ namespace VisionSystem
             SendingCommandsToRobot.SendCommand("HNDON1", serialPort);
         }
 
-<<<<<<< HEAD
         #endregion
 
         #region JOINT Manual Control
@@ -643,11 +452,6 @@ namespace VisionSystem
         {
             MovingRobotJoint.MoveRobotJoint(MovingRobotJoint.JointEnum.J1p, serialPort);
         }
-=======
-            string openComunication = "1;1;OPEN=melfa " + "\r\n";
-            string servoOff = "1;1;SRVON" + "\r\n";
-            richTextBox2.Text = openComunication + servoOff;
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
 
         private void J1mBtn_Click(object sender, EventArgs e)
         {
@@ -705,24 +509,6 @@ namespace VisionSystem
             }
         }
 
-
-        private void glowne_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void trackBar2_Scroll(object sender, EventArgs e)
-        {
-       //     scale = 1 + (trackBar3.Value / 100);
-       //     richTextBox2.Text = scale + "," + neighbour;
-       }
-
-        private void trackBar3_Scroll(object sender, EventArgs e)
-        {
-            neighbour = trackBar3.Value;
-            //string xx = neighbour + "";
-            //richTextBox2.Text = xx;
-        }
     }
 }
 

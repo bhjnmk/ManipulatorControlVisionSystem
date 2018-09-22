@@ -132,6 +132,7 @@
             this.J1pBtn = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.positionCheckTimer = new System.Windows.Forms.Timer(this.components);
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.tabPageCommands.SuspendLayout();
             this.tabPageXYZ.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedBarXYZ)).BeginInit();
@@ -146,6 +147,7 @@
             this.tabPageJoint.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedbarJoint)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.SuspendLayout();
             // 
             // positionDataTimer
@@ -732,6 +734,7 @@
             // 
             // tabPageCOM
             // 
+            this.tabPageCOM.Controls.Add(this.pictureBox6);
             this.tabPageCOM.Controls.Add(this.disconnect_rtxt);
             this.tabPageCOM.Controls.Add(this.richTextBox2);
             this.tabPageCOM.Controls.Add(this.richTextBox1);
@@ -809,7 +812,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(681, 486);
+            this.pictureBox5.Location = new System.Drawing.Point(681, 504);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(300, 110);
             this.pictureBox5.TabIndex = 36;
@@ -818,7 +821,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(734, 336);
+            this.pictureBox4.Location = new System.Drawing.Point(836, 374);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(203, 115);
             this.pictureBox4.TabIndex = 35;
@@ -827,7 +830,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(681, 110);
+            this.pictureBox3.Location = new System.Drawing.Point(681, 93);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(300, 200);
             this.pictureBox3.TabIndex = 34;
@@ -1342,6 +1345,15 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
+            this.pictureBox6.Location = new System.Drawing.Point(626, 309);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(203, 115);
+            this.pictureBox6.TabIndex = 42;
+            this.pictureBox6.TabStop = false;
+            // 
             // AppWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1372,6 +1384,7 @@
             this.tabPageJoint.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedbarJoint)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1475,18 +1488,11 @@
         private System.Windows.Forms.RichTextBox richTextBox11;
         private System.Windows.Forms.TextBox textBox14;
         private System.Windows.Forms.Button jointMoveBtn;
-<<<<<<< HEAD
         private System.Windows.Forms.Timer positionCheckTimer;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox speedTxtBox;
         private System.Windows.Forms.Label label12;
-=======
-        private System.Windows.Forms.RichTextBox richTextBox3;
-        private System.Windows.Forms.TrackBar trackBar3;
-        private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label2;
->>>>>>> 44c4bc8fb8056b8c3f12b45838d513b1c7660019
+        private System.Windows.Forms.PictureBox pictureBox6;
     }
 }
 
