@@ -1,9 +1,9 @@
-# VisionSystem and 
+# Vision system for manipulator control
 
 ```
 Copyright (C) 2018 by Magdalena Kuzmicz
 Version: 1.0
-Technologies: C#, OpenCV/EmguCV, WindowsForms
+Technologies: C#, OpenCV/EmguCV, WindowsForms, Haaro-like characteristics classifiers
 ```
 
 ## About the project
